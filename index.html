@@ -1,0 +1,5045 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI+应用：前端未来交互范式探索</title>
+  <link rel="icon" type="image/svg+xml" href="logo.svg">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.157.0/build/three.min.js"></script>
+  <script defer src="https://stat.vidorra.life/script.js" data-website-id="2ce56fda-5a70-40ff-a312-7c32975ea26c"></script>
+  <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+      :root {
+          --primary-color: #4F46E5;
+          --secondary-color: #10B981;
+          --accent-color: #F59E0B;
+          --dark-color: #1F2937;
+          --light-color: #F3F4F6;
+      }
+
+      body {
+          font-family: 'Poppins', sans-serif;
+          scroll-behavior: smooth;
+      }
+
+      .gradient-text {
+          background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+      }
+
+      .timeline-item {
+          position: relative;
+          padding-left: 30px;
+          margin-bottom: 20px;
+      }
+
+      .timeline-item:before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 0;
+          height: 100%;
+          width: 2px;
+          background: var(--primary-color);
+      }
+
+      .timeline-item:after {
+          content: '';
+          position: absolute;
+          left: -4px;
+          top: 0;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background: var(--primary-color);
+      }
+
+      .card {
+          transition: all 0.3s ease;
+      }
+
+      .card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .demo-container {
+          border: 1px solid #e5e7eb;
+          border-radius: 0.5rem;
+          padding: 1rem;
+          margin: 1rem 0;
+          background-color: #f9fafb;
+      }
+
+      .voice-wave {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 60px;
+      }
+
+      .voice-wave span {
+          display: inline-block;
+          width: 5px;
+          height: 5px;
+          margin: 0 2px;
+          background-color: var(--primary-color);
+          border-radius: 50%;
+          animation: wave 1.5s infinite ease-in-out;
+      }
+
+      .voice-wave span:nth-child(2) {
+          animation-delay: 0.2s;
+      }
+
+      .voice-wave span:nth-child(3) {
+          animation-delay: 0.4s;
+      }
+
+      .voice-wave span:nth-child(4) {
+          animation-delay: 0.6s;
+      }
+
+      .voice-wave span:nth-child(5) {
+          animation-delay: 0.8s;
+      }
+
+      @keyframes wave {
+          0%, 100% {
+              height: 5px;
+          }
+          50% {
+              height: 30px;
+          }
+      }
+
+      .ai-assistant {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          width: 60px;
+          height: 60px;
+          background-color: var(--primary-color);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          cursor: pointer;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+          z-index: 1000;
+          transition: all 0.3s ease;
+      }
+
+      .ai-assistant:hover {
+          transform: scale(1.1);
+      }
+
+      .ai-pulse {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          background-color: var(--primary-color);
+          opacity: 0.6;
+          animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+          0% {
+              transform: scale(1);
+              opacity: 0.6;
+          }
+          70% {
+              transform: scale(1.3);
+              opacity: 0;
+          }
+          100% {
+              transform: scale(1.3);
+              opacity: 0;
+          }
+      }
+
+      .code-container {
+          position: relative;
+          margin: 1.5rem 0;
+      }
+
+      .code-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          background-color: #2d3748;
+          color: white;
+          padding: 0.5rem 1rem;
+          border-top-left-radius: 0.5rem;
+          border-top-right-radius: 0.5rem;
+          font-family: monospace;
+      }
+
+      .copy-btn {
+          background-color: transparent;
+          border: 1px solid #cbd5e0;
+          color: #cbd5e0;
+          padding: 0.25rem 0.5rem;
+          border-radius: 0.25rem;
+          font-size: 0.75rem;
+          cursor: pointer;
+          transition: all 0.2s ease;
+      }
+
+      .copy-btn:hover {
+          background-color: #cbd5e0;
+          color: #2d3748;
+      }
+
+      pre {
+          margin: 0 !important;
+          border-top-left-radius: 0 !important;
+          border-top-right-radius: 0 !important;
+      }
+
+      .progress-container {
+          width: 100%;
+          height: 8px;
+          background-color: #e5e7eb;
+          border-radius: 4px;
+          margin: 10px 0;
+      }
+
+      .progress-bar {
+          height: 100%;
+          border-radius: 4px;
+          background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+          width: 0;
+          transition: width 1s ease;
+      }
+
+      .gesture-demo {
+          width: 300px;
+          height: 300px;
+          background-color: #f3f4f6;
+          border-radius: 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0 auto;
+          position: relative;
+          overflow: hidden;
+      }
+
+      .gesture-hand {
+          position: absolute;
+          width: 60px;
+          height: 60px;
+          background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0iZmVhdGhlciBmZWF0aGVyLWhhbmQiPjxwYXRoIGQ9Ik0yMSAxMHYxMGEyIDIgMCAwIDEtMiAySDVhMiAyIDAgMCAxLTItMlYxME0yMSAxMGwtNi02TTIxIDEwbC02IDYiPjwvcGF0aD48L3N2Zz4=');
+          background-size: contain;
+          background-repeat: no-repeat;
+          transform: translate(-50%, -50%);
+          cursor: none;
+          z-index: 10;
+      }
+
+      .canvas-container {
+          width: 100%;
+          height: 400px;
+          position: relative;
+      }
+
+      .tab-container {
+          display: flex;
+          border-bottom: 1px solid #e5e7eb;
+          margin-bottom: 1rem;
+      }
+
+      .tab {
+          padding: 0.5rem 1rem;
+          cursor: pointer;
+          border-bottom: 2px solid transparent;
+          transition: all 0.3s ease;
+      }
+
+      .tab.active {
+          border-bottom: 2px solid var(--primary-color);
+          color: var(--primary-color);
+          font-weight: 500;
+      }
+
+      .tab-content {
+          display: none;
+      }
+
+      .tab-content.active {
+          display: block;
+      }
+
+      .chat-container {
+          border: 1px solid #e5e7eb;
+          border-radius: 0.5rem;
+          height: 400px;
+          display: flex;
+          flex-direction: column;
+      }
+
+      .chat-messages {
+          flex: 1;
+          overflow-y: auto;
+          padding: 1rem;
+      }
+
+      .chat-input {
+          display: flex;
+          padding: 0.5rem;
+          border-top: 1px solid #e5e7eb;
+      }
+
+      .chat-input input {
+          flex: 1;
+          padding: 0.5rem;
+          border: 1px solid #e5e7eb;
+          border-radius: 0.25rem;
+          margin-right: 0.5rem;
+      }
+
+      .chat-input button {
+          background-color: var(--primary-color);
+          color: white;
+          border: none;
+          border-radius: 0.25rem;
+          padding: 0.5rem 1rem;
+          cursor: pointer;
+      }
+
+      .message {
+          margin-bottom: 1rem;
+          max-width: 80%;
+      }
+
+      .message.user {
+          align-self: flex-end;
+          margin-left: auto;
+      }
+
+      .message.ai {
+          align-self: flex-start;
+          margin-right: auto;
+      }
+
+      .message-content {
+          padding: 0.75rem;
+          border-radius: 0.5rem;
+      }
+
+      .user .message-content {
+          background-color: var(--primary-color);
+          color: white;
+          border-top-right-radius: 0;
+      }
+
+      .ai .message-content {
+          background-color: #f3f4f6;
+          border-top-left-radius: 0;
+      }
+
+      .comparison-table {
+          width: 100%;
+          border-collapse: collapse;
+          margin: 1.5rem 0;
+      }
+
+      .comparison-table th,
+      .comparison-table td {
+          border: 1px solid #e5e7eb;
+          padding: 0.75rem;
+          text-align: left;
+      }
+
+      .comparison-table th {
+          background-color: #f9fafb;
+          font-weight: 500;
+      }
+
+      .comparison-table tr:nth-child(even) {
+          background-color: #f9fafb;
+      }
+
+      .comparison-table tr:hover {
+          background-color: #f3f4f6;
+      }
+
+      .feature-icon {
+          width: 48px;
+          height: 48px;
+          background-color: rgba(79, 70, 229, 0.1);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 1rem;
+      }
+
+      .feature-icon svg {
+          width: 24px;
+          height: 24px;
+          color: var(--primary-color);
+      }
+
+      .roadmap-container {
+          position: relative;
+          padding-left: 30px;
+      }
+
+      .roadmap-line {
+          position: absolute;
+          left: 15px;
+          top: 0;
+          bottom: 0;
+          width: 2px;
+          background-color: #e5e7eb;
+      }
+
+      .roadmap-item {
+          position: relative;
+          margin-bottom: 2rem;
+      }
+
+      .roadmap-dot {
+          position: absolute;
+          left: -30px;
+          top: 0;
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background-color: white;
+          border: 2px solid var(--primary-color);
+          z-index: 1;
+      }
+
+      .roadmap-content {
+          background-color: white;
+          border: 1px solid #e5e7eb;
+          border-radius: 0.5rem;
+          padding: 1rem;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      }
+
+      .roadmap-year {
+          display: inline-block;
+          background-color: var(--primary-color);
+          color: white;
+          padding: 0.25rem 0.5rem;
+          border-radius: 0.25rem;
+          font-size: 0.875rem;
+          margin-bottom: 0.5rem;
+      }
+
+      .ai-model-demo {
+          width: 100%;
+          height: 300px;
+          background-color: #f3f4f6;
+          border-radius: 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 1rem 0;
+          position: relative;
+          overflow: hidden;
+      }
+
+      .ai-model-demo canvas {
+          width: 100%;
+          height: 100%;
+      }
+
+      .tooltip {
+          position: relative;
+          display: inline-block;
+          cursor: pointer;
+          border-bottom: 1px dashed #cbd5e0;
+      }
+
+      .tooltip .tooltip-text {
+          visibility: hidden;
+          width: 200px;
+          position: absolute;
+          z-index: 1;
+          bottom: 125%;
+          left: 50%;
+          margin-left: -100px;
+          background-color: #2d3748;
+          color: #fff;
+          text-align: center;
+          border-radius: 6px;
+          padding: 8px;
+          opacity: 0;
+          transition: opacity 0.3s;
+          font-size: 0.75rem;
+      }
+
+      .tooltip:hover .tooltip-text {
+          visibility: visible;
+          opacity: 1;
+      }
+
+      .tooltip .tooltip-text::after {
+          content: "";
+          position: absolute;
+          top: 100%;
+          left: 50%;
+          margin-left: -5px;
+          border-width: 5px;
+          border-style: solid;
+          border-color: #2d3748 transparent transparent transparent;
+      }
+
+      .tech-badge {
+          display: inline-block;
+          background-color: #e5e7eb;
+          color: #4b5563;
+          padding: 0.25rem 0.5rem;
+          border-radius: 9999px;
+          font-size: 0.75rem;
+          margin-right: 0.5rem;
+          margin-bottom: 0.5rem;
+      }
+
+      .tech-badge.mature {
+          background-color: #d1fae5;
+          color: #065f46;
+      }
+
+      .tech-badge.emerging {
+          background-color: #fef3c7;
+          color: #92400e;
+      }
+
+      .tech-badge.research {
+          background-color: #dbeafe;
+          color: #1e40af;
+      }
+
+      .scroll-indicator {
+          position: fixed;
+          top: 0;
+          left: 0;
+          height: 4px;
+          background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+          z-index: 1000;
+          width: 0%;
+      }
+
+      @media (max-width: 768px) {
+          .timeline-item {
+              padding-left: 20px;
+          }
+
+          .roadmap-container {
+              padding-left: 20px;
+          }
+
+          .roadmap-dot {
+              left: -20px;
+              width: 16px;
+              height: 16px;
+          }
+      }
+
+      /* 添加到样式部分 */
+      .roadmap {
+          position: relative;
+          padding: 40px 0;
+      }
+
+      .roadmap-timeline {
+          display: flex;
+          justify-content: space-between;
+          position: relative;
+          margin: 0 20px;
+      }
+
+      .roadmap-timeline::before {
+          content: '';
+          position: absolute;
+          top: 50px;
+          left: 0;
+          right: 0;
+          height: 4px;
+          background-color: #e5e7eb;
+          z-index: 1;
+      }
+
+      .timeline-point {
+          position: relative;
+          z-index: 2;
+          padding-top: 30px;
+          width: 22%;
+          text-align: center;
+      }
+
+      .timeline-point::before {
+          content: '';
+          position: absolute;
+          top: 48px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background-color: white;
+          border: 2px solid #4F46E5;
+          z-index: 3;
+      }
+
+      .timeline-point.current::before {
+          background-color: #4F46E5;
+      }
+
+      .point-year {
+          font-weight: 600;
+          color: #4F46E5;
+          margin-bottom: 50px;
+      }
+
+      .point-title {
+          font-weight: 600;
+          margin-bottom: 10px;
+          font-size: 1.1rem;
+      }
+
+      .point-features {
+          list-style-type: disc;
+          padding-left: 20px;
+          text-align: left;
+          font-size: 0.9rem;
+          color: #4b5563;
+      }
+
+      .point-features li {
+          margin-bottom: 5px;
+      }
+
+      /* 响应式调整 */
+      @media (max-width: 768px) {
+          .roadmap-timeline {
+              flex-direction: column;
+              margin: 0;
+          }
+
+          .roadmap-timeline::before {
+              top: 0;
+              bottom: 0;
+              left: 20px;
+              right: auto;
+              width: 4px;
+              height: auto;
+          }
+
+          .timeline-point {
+              width: auto;
+              text-align: left;
+              padding-left: 50px;
+              padding-top: 0;
+              margin-bottom: 40px;
+          }
+
+          .timeline-point::before {
+              top: 0;
+              left: 20px;
+              transform: none;
+          }
+
+          .point-year {
+              margin-bottom: 10px;
+          }
+      }
+
+      /* 添加到样式部分 */
+      .tech-item, .api-item, .optimization-item, .testing-item {
+          background-color: #f9fafb;
+          border-radius: 0.5rem;
+          padding: 1rem;
+          margin-bottom: 1.5rem;
+          border: 1px solid #e5e7eb;
+          transition: all 0.3s ease;
+      }
+
+      .tech-item:hover, .api-item:hover, .optimization-item:hover, .testing-item:hover {
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+          transform: translateY(-2px);
+      }
+
+      .tech-header, .api-header, .testing-icon, .optimization-icon {
+          display: flex;
+          align-items: center;
+          margin-bottom: 0.75rem;
+      }
+
+      .tech-icon, .principle-icon, .testing-icon, .optimization-icon {
+          width: 2.5rem;
+          height: 2.5rem;
+          background-color: rgba(79, 70, 229, 0.1);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-right: 0.75rem;
+          flex-shrink: 0;
+      }
+
+      .tech-details, .api-details, .optimization-content, .testing-content {
+          margin-top: 0.75rem;
+      }
+
+      .tech-libs, .api-providers, .service-features, .api-features {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+          margin-bottom: 0.75rem;
+      }
+
+      .tech-lib, .provider, .feature, .tech-item, .resource-tag {
+          background-color: rgba(79, 70, 229, 0.1);
+          color: #4F46E5;
+          padding: 0.25rem 0.5rem;
+          border-radius: 9999px;
+          font-size: 0.75rem;
+          font-weight: 500;
+      }
+
+      .code-snippet {
+          background-color: #1e293b;
+          border-radius: 0.375rem;
+          overflow: hidden;
+          margin-top: 0.75rem;
+      }
+
+      .code-snippet pre {
+          margin: 0;
+          padding: 0.75rem;
+          font-family: monospace;
+          font-size: 0.75rem;
+          color: #e2e8f0;
+          white-space: pre-wrap;
+          word-break: break-all;
+          overflow-x: auto;
+      }
+
+      .code-snippet code {
+          font-family: monospace;
+      }
+
+      .api-item {
+          border-left: 3px solid #4F46E5;
+      }
+
+      .api-providers {
+          display: flex;
+          gap: 0.5rem;
+          margin-left: auto;
+      }
+
+      .provider {
+          background-color: rgba(16, 185, 129, 0.1);
+          color: #10B981;
+      }
+
+      .api-features {
+          margin-top: 0.75rem;
+      }
+
+      .feature {
+          background-color: rgba(245, 158, 11, 0.1);
+          color: #F59E0B;
+      }
+
+      .integration-example {
+          border: 1px solid #e5e7eb;
+          border-radius: 0.375rem;
+          padding: 0.75rem;
+          margin-top: 0.75rem;
+          background-color: white;
+      }
+
+      .example-header {
+          font-weight: 500;
+          margin-bottom: 0.5rem;
+          font-size: 0.875rem;
+          color: #4b5563;
+      }
+
+      .example-result {
+          display: flex;
+          flex-direction: column;
+          gap: 0.375rem;
+      }
+
+      .result-item {
+          display: flex;
+          font-size: 0.75rem;
+      }
+
+      .result-label {
+          font-weight: 500;
+          margin-right: 0.5rem;
+          color: #4b5563;
+      }
+
+      .result-value {
+          color: #6b7280;
+      }
+
+      .optimization-item, .testing-item {
+          display: flex;
+          align-items: flex-start;
+          padding: 1rem;
+      }
+
+      .performance-metrics {
+          margin-top: 0.75rem;
+      }
+
+      .metric {
+          display: flex;
+          align-items: center;
+          margin-bottom: 0.5rem;
+          font-size: 0.75rem;
+      }
+
+      .metric-label {
+          width: 40%;
+          color: #4b5563;
+      }
+
+      .metric-bar {
+          width: 40%;
+          height: 0.5rem;
+          background-color: #e5e7eb;
+          border-radius: 9999px;
+          margin: 0 0.5rem;
+          overflow: hidden;
+      }
+
+      .metric-fill {
+          height: 100%;
+          background: linear-gradient(90deg, #4F46E5, #10B981);
+          border-radius: 9999px;
+          transition: width 1s ease;
+      }
+
+      .metric-value {
+          color: #6b7280;
+      }
+
+      /* 响应式调整 */
+      @media (max-width: 768px) {
+          .tech-header, .api-header {
+              flex-direction: column;
+              align-items: flex-start;
+          }
+
+          .tech-icon, .api-providers {
+              margin-bottom: 0.5rem;
+          }
+
+          .api-providers {
+              margin-left: 0;
+              margin-top: 0.5rem;
+          }
+
+          .optimization-item, .testing-item {
+              flex-direction: column;
+          }
+
+          .optimization-icon, .testing-icon {
+              margin-bottom: 0.5rem;
+          }
+
+          .metric {
+              flex-direction: column;
+              align-items: flex-start;
+          }
+
+          .metric-label {
+              width: 100%;
+              margin-bottom: 0.25rem;
+          }
+
+          .metric-bar {
+              width: 80%;
+              margin: 0.25rem 0;
+          }
+      }
+
+      /* 添加到样式部分 - 资源与工具部分样式优化 */
+      .resource-item, .api-service-item, .learning-resource, .community-item {
+          background-color: #f9fafb;
+          border-radius: 0.5rem;
+          padding: 1rem;
+          margin-bottom: 1rem;
+          border: 1px solid #e5e7eb;
+          transition: all 0.3s ease;
+      }
+
+      .resource-item:hover, .api-service-item:hover, .learning-resource:hover, .community-item:hover {
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+          transform: translateY(-2px);
+      }
+
+      .resource-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 0.75rem;
+      }
+
+      .resource-header h4 {
+          margin: 0;
+          font-size: 1rem;
+          color: #1f2937;
+      }
+
+      .resource-link {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 1.75rem;
+          height: 1.75rem;
+          border-radius: 50%;
+          background-color: rgba(79, 70, 229, 0.1);
+          color: #4F46E5;
+          transition: all 0.3s ease;
+      }
+
+      .resource-link:hover {
+          background-color: #4F46E5;
+          color: white;
+      }
+
+      .resource-tags {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+          margin-top: 0.75rem;
+      }
+
+      .resource-tag {
+          background-color: rgba(79, 70, 229, 0.1);
+          color: #4F46E5;
+          padding: 0.25rem 0.5rem;
+          border-radius: 9999px;
+          font-size: 0.75rem;
+          font-weight: 500;
+      }
+
+      /* API服务项样式 */
+      .api-service-item {
+          border-left: 3px solid #4F46E5;
+      }
+
+      .service-name {
+          font-weight: 600;
+          font-size: 1rem;
+          color: #1f2937;
+          margin-bottom: 0.5rem;
+      }
+
+      .service-desc {
+          font-size: 0.875rem;
+          color: #4b5563;
+          margin-bottom: 0.75rem;
+      }
+
+      .service-features {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+      }
+
+      /* 学习资源样式 */
+      .learning-resource {
+          display: flex;
+          flex-direction: column;
+      }
+
+      .resource-name {
+          font-weight: 600;
+          font-size: 1rem;
+          color: #1f2937;
+          margin-bottom: 0.25rem;
+      }
+
+      .resource-type {
+          display: inline-block;
+          background-color: rgba(16, 185, 129, 0.1);
+          color: #10B981;
+          padding: 0.25rem 0.5rem;
+          border-radius: 9999px;
+          font-size: 0.75rem;
+          font-weight: 500;
+          margin-bottom: 0.5rem;
+          width: fit-content;
+      }
+
+      .resource-desc {
+          font-size: 0.875rem;
+          color: #4b5563;
+      }
+
+      /* 社区项样式 */
+      .community-item {
+          border-left: 3px solid #F59E0B;
+      }
+
+      .community-name {
+          font-weight: 600;
+          font-size: 1rem;
+          color: #1f2937;
+          margin-bottom: 0.5rem;
+      }
+
+      .community-desc {
+          font-size: 0.875rem;
+          color: #4b5563;
+          margin-bottom: 0.75rem;
+      }
+
+      .community-link {
+          display: inline-block;
+          background-color: rgba(245, 158, 11, 0.1);
+          color: #F59E0B;
+          padding: 0.375rem 0.75rem;
+          border-radius: 0.375rem;
+          font-size: 0.875rem;
+          font-weight: 500;
+          transition: all 0.3s ease;
+      }
+
+      .community-link:hover {
+          background-color: #F59E0B;
+          color: white;
+      }
+
+      /* 响应式调整 */
+      @media (max-width: 768px) {
+          .resource-header {
+              flex-direction: column;
+              align-items: flex-start;
+          }
+
+          .resource-link {
+              margin-top: 0.5rem;
+          }
+
+          .service-features, .resource-tags {
+              margin-top: 0.5rem;
+          }
+
+          .community-link {
+              width: 100%;
+              text-align: center;
+          }
+      }
+
+      /* 添加到样式部分 - 联系与反馈部分样式优化 */
+      /* 表单样式增强 */
+      .form-group {
+          margin-bottom: 1.25rem;
+      }
+
+      .form-group label {
+          display: block;
+          margin-bottom: 0.5rem;
+          font-weight: 500;
+          color: #4b5563;
+      }
+
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+          width: 100%;
+          padding: 0.75rem;
+          border: 1px solid #e5e7eb;
+          border-radius: 0.375rem;
+          background-color: #f9fafb;
+          transition: all 0.3s ease;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus,
+      .form-group textarea:focus {
+          outline: none;
+          border-color: #4F46E5;
+          box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+          background-color: white;
+      }
+
+      .form-group button {
+          width: 100%;
+          padding: 0.75rem;
+          background: linear-gradient(90deg, #4F46E5, #10B981);
+          color: white;
+          border: none;
+          border-radius: 0.375rem;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.3s ease;
+      }
+
+      .form-group button:hover {
+          opacity: 0.9;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+      }
+
+      /* FAQ样式优化 */
+      .faq-item {
+          margin-bottom: 1rem;
+          border: 1px solid #e5e7eb;
+          border-radius: 0.375rem;
+          overflow: hidden;
+      }
+
+      .faq-question {
+          background-color: #f9fafb;
+          padding: 0;
+      }
+
+      .faq-question button {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          width: 100%;
+          padding: 1rem;
+          text-align: left;
+          background: none;
+          border: none;
+          cursor: pointer;
+          font-weight: 500;
+          color: #1f2937;
+          transition: all 0.3s ease;
+      }
+
+      .faq-question button:hover {
+          background-color: rgba(79, 70, 229, 0.05);
+      }
+
+      .faq-question svg {
+          min-width: 20px;
+          transition: transform 0.3s ease;
+      }
+
+      .faq-answer {
+          padding: 0 1rem 1rem 1rem;
+          border-top: 1px solid #e5e7eb;
+          display: none;
+      }
+
+      .faq-answer.active {
+          display: block;
+      }
+
+      /* 其他联系方式样式 */
+      .other-contact {
+          margin-top: 2rem;
+          padding-top: 1.5rem;
+          border-top: 1px solid #e5e7eb;
+      }
+
+      .contact-item {
+          display: flex;
+          align-items: center;
+          margin-bottom: 0.75rem;
+      }
+
+      .contact-item svg {
+          width: 1.25rem;
+          height: 1.25rem;
+          color: #4F46E5;
+          margin-right: 0.75rem;
+      }
+
+      .contact-item span {
+          color: #4b5563;
+      }
+
+      /* 响应式调整 */
+      @media (max-width: 768px) {
+          .form-group button {
+              padding: 0.75rem 1rem;
+          }
+
+          .faq-question button {
+              padding: 0.75rem;
+          }
+      }
+
+
+      /* 添加到样式部分 - AI前端设计模式与最佳实践样式优化 */
+      /* 原则项样式 */
+      .principle-item {
+          display: flex;
+          margin-bottom: 1.25rem;
+          align-items: flex-start;
+      }
+
+      .principle-icon {
+          width: 2.5rem;
+          height: 2.5rem;
+          background-color: rgba(79, 70, 229, 0.1);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-right: 1rem;
+          flex-shrink: 0;
+      }
+
+      .principle-icon svg {
+          width: 1.25rem;
+          height: 1.25rem;
+          color: #4F46E5;
+      }
+
+      .principle-content {
+          flex: 1;
+      }
+
+      .principle-content h4 {
+          font-weight: 600;
+          color: #1f2937;
+          margin-bottom: 0.375rem;
+      }
+
+      .principle-content p {
+          font-size: 0.875rem;
+          color: #4b5563;
+          line-height: 1.5;
+      }
+
+      /* 设计模式项样式 */
+      .pattern-item {
+          background-color: #f9fafb;
+          border-radius: 0.5rem;
+          padding: 1.25rem;
+          margin-bottom: 1.5rem;
+          border: 1px solid #e5e7eb;
+          transition: all 0.3s ease;
+      }
+
+      .pattern-item:hover {
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+          transform: translateY(-2px);
+      }
+
+      .pattern-header {
+          display: flex;
+          align-items: center;
+          margin-bottom: 0.75rem;
+      }
+
+      .pattern-icon {
+          width: 2rem;
+          height: 2rem;
+          background-color: rgba(79, 70, 229, 0.1);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-right: 0.75rem;
+      }
+
+      .pattern-icon svg {
+          width: 1rem;
+          height: 1rem;
+          color: #4F46E5;
+      }
+
+      .pattern-example {
+          background-color: white;
+          border-radius: 0.375rem;
+          padding: 0.75rem;
+          margin-top: 0.5rem;
+          margin-bottom: 0.5rem;
+          border: 1px solid #e5e7eb;
+      }
+
+      .chat-container {
+          display: flex;
+          flex-direction: column;
+      }
+
+      .chat-bubble {
+          max-width: 80%;
+          padding: 0.625rem;
+          border-radius: 0.5rem;
+          margin-bottom: 0.5rem;
+          font-size: 0.75rem;
+      }
+
+      .chat-bubble.ai {
+          background-color: #f3f4f6;
+          align-self: flex-start;
+          border-top-left-radius: 0;
+      }
+
+      .chat-bubble.user {
+          background-color: #4F46E5;
+          color: white;
+          align-self: flex-end;
+          border-top-right-radius: 0;
+      }
+
+      .chat-bubble.error {
+          background-color: #fee2e2;
+          color: #b91c1c;
+          border-top-left-radius: 0;
+      }
+
+      .suggestion-container {
+          background-color: white;
+          border-radius: 0.375rem;
+          border: 1px solid #e5e7eb;
+          overflow: hidden;
+      }
+
+      .input-field {
+          padding: 0.75rem;
+          background-color: #4F46E5;
+          color: white;
+          font-size: 0.75rem;
+      }
+
+      .suggestions {
+          padding: 0.5rem;
+      }
+
+      .suggestion-item {
+          padding: 0.5rem;
+          font-size: 0.75rem;
+          color: #4b5563;
+          border-radius: 0.25rem;
+          margin-bottom: 0.25rem;
+      }
+
+      .suggestion-item.active {
+          background-color: rgba(79, 70, 229, 0.1);
+          color: #4F46E5;
+          font-weight: 500;
+      }
+
+      .adaptive-ui {
+          background-color: white;
+          border-radius: 0.375rem;
+          border: 1px solid #e5e7eb;
+          overflow: hidden;
+      }
+
+      .adaptive-header {
+          padding: 0.75rem;
+          background-color: #f9fafb;
+          border-bottom: 1px solid #e5e7eb;
+      }
+
+      .adaptive-header .user-greeting {
+          font-weight: 500;
+          color: #1f2937;
+          font-size: 0.875rem;
+      }
+
+      .adaptive-header .context-info {
+          font-size: 0.75rem;
+          color: #6b7280;
+          margin-top: 0.25rem;
+      }
+
+      .adaptive-content {
+          padding: 0.75rem;
+      }
+
+      .priority-item {
+          background-color: #f3f4f6;
+          padding: 0.625rem;
+          border-radius: 0.375rem;
+          font-size: 0.75rem;
+          color: #4b5563;
+          margin-bottom: 0.5rem;
+      }
+
+      .priority-item:first-child {
+          background-color: rgba(79, 70, 229, 0.1);
+          color: #4F46E5;
+      }
+
+      /* 最佳实践样式 */
+      .best-practice {
+          margin-bottom: 0.75rem;
+      }
+
+      .practice-title {
+          font-weight: 600;
+          color: #1f2937;
+          font-size: 0.875rem;
+          margin-bottom: 0.25rem;
+      }
+
+      .practice-desc {
+          font-size: 0.75rem;
+          color: #4b5563;
+          line-height: 1.5;
+      }
+
+      .error-handling-example, .multimodal-example, .transparency-example {
+          margin-top: 0.75rem;
+      }
+
+      /* 错误处理示例 */
+      .error-handling-example .chat-bubble.error {
+          width: 100%;
+      }
+
+      .error-handling-example .flex {
+          display: flex;
+          gap: 0.5rem;
+          margin-top: 0.5rem;
+      }
+
+      .error-handling-example button {
+          padding: 0.375rem 0.75rem;
+          font-size: 0.75rem;
+          border-radius: 0.25rem;
+          cursor: pointer;
+          transition: all 0.2s ease;
+      }
+
+      .error-handling-example button:first-child {
+          background-color: #4F46E5;
+          color: white;
+          border: none;
+      }
+
+      .error-handling-example button:not(:first-child) {
+          background-color: white;
+          color: #4b5563;
+          border: 1px solid #d1d5db;
+      }
+
+      /* 多模态示例 */
+      .multimodal-example {
+          font-size: 0.75rem;
+      }
+
+      /* AI推荐示例 */
+      .ai-recommendation {
+          font-size: 0.75rem;
+      }
+
+      /* 响应式调整 */
+      @media (max-width: 768px) {
+          .principle-item {
+              flex-direction: column;
+          }
+
+          .principle-icon {
+              margin-bottom: 0.75rem;
+              margin-right: 0;
+          }
+
+          .pattern-example {
+              padding: 0.5rem;
+          }
+
+          .pattern-header {
+              flex-wrap: wrap;
+          }
+      }
+
+
+  </style>
+</head>
+<body class="bg-gray-50">
+<div class="scroll-indicator" id="scrollIndicator"></div>
+
+<!-- 顶部导航 -->
+<nav class="bg-white shadow-sm sticky top-0 z-50">
+  <div class="container mx-auto px-4 py-3">
+    <div class="flex justify-between items-center">
+      <div class="flex items-center">
+        <span class="text-xl font-bold gradient-text">AI+前端</span>
+      </div>
+      <div class="hidden md:flex space-x-6">
+        <a href="#overview" class="text-gray-600 hover:text-indigo-600 transition">概述</a>
+        <a href="#evolution" class="text-gray-600 hover:text-indigo-600 transition">交互演进</a>
+        <a href="#technologies" class="text-gray-600 hover:text-indigo-600 transition">技术支撑</a>
+        <a href="#scenarios" class="text-gray-600 hover:text-indigo-600 transition">应用场景</a>
+        <a href="#human-ai" class="text-gray-600 hover:text-indigo-600 transition">人机关系</a>
+        <a href="#io-modes" class="text-gray-600 hover:text-indigo-600 transition">输入输出模式</a>
+        <a href="#cross-system" class="text-gray-600 hover:text-indigo-600 transition">跨系统整合</a>
+        <a href="#roadmap" class="text-gray-600 hover:text-indigo-600 transition">发展路线</a>
+      </div>
+      <div class="md:hidden">
+        <button class="text-gray-600 focus:outline-none">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- 头部 -->
+<header class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
+  <div class="container mx-auto px-4 py-16 md:py-24">
+    <div class="text-center">
+      <h1 class="text-4xl md:text-6xl font-bold mb-4 animate__animated animate__fadeInDown">AI+应用</h1>
+      <p class="text-xl md:text-2xl mb-8 animate__animated animate__fadeInUp animate__delay-1s">
+        探索前端未来交互范式的演变与创新</p>
+      <div class="flex justify-center space-x-4 animate__animated animate__fadeInUp animate__delay-2s">
+        <a href="#overview"
+           class="bg-white text-indigo-600 px-6 py-3 rounded-lg font-medium hover:bg-opacity-90 transition">开始探索</a>
+        <a href="#roadmap"
+           class="bg-transparent border-2 border-white text-white px-6 py-3 rounded-lg font-medium hover:bg-white hover:bg-opacity-10 transition">查看路线图</a>
+      </div>
+    </div>
+  </div>
+  <div class="wave-container">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="w-full">
+      <path fill="#f9fafb" fill-opacity="1"
+            d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,149.3C960,160,1056,160,1152,138.7C1248,117,1344,75,1392,53.3L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+    </svg>
+  </div>
+</header>
+
+<main class="container mx-auto px-4 py-8">
+  <!-- 概述部分 -->
+  <section id="overview" class="mb-16">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold mb-4">AI+前端：新时代的交互范式</h2>
+      <p class="text-gray-600 max-w-3xl mx-auto">
+        从互联网+到AI+，技术的演进正在深刻改变前端应用的交互方式。本报告探讨AI技术如何重塑前端交互范式，以及未来可能的发展方向。</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="card bg-white p-6 rounded-lg shadow-sm">
+        <div class="feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold mb-2">交互范式变革</h3>
+        <p class="text-gray-600">
+          从传统的WIMP(窗口、图标、菜单、指针)到对话式UI，再到多模态交互，AI正在推动前端交互方式的根本性变革。</p>
+      </div>
+
+      <div class="card bg-white p-6 rounded-lg shadow-sm">
+        <div class="feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold mb-2">技术支撑体系</h3>
+        <p class="text-gray-600">
+          大型语言模型(LLM)、多模态AI、边缘计算等技术正在构建新一代前端应用的技术基础，使更自然、智能的交互成为可能。</p>
+      </div>
+
+      <div class="card bg-white p-6 rounded-lg shadow-sm">
+        <div class="feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold mb-2">演进路径</h3>
+        <p class="text-gray-600">
+          从内容智能到行为智能，再到高级个性化定制，AI前端应用正沿着明确的路径不断发展，每个阶段都带来新的交互可能。</p>
+      </div>
+    </div>
+
+    <div class="mt-12 bg-white p-6 rounded-lg shadow-sm">
+      <h3 class="text-xl font-semibold mb-4">AI前端交互范式的演进阶段</h3>
+      <div class="overflow-x-auto">
+        <table class="comparison-table">
+          <thead>
+          <tr>
+            <th>阶段</th>
+            <th>特征</th>
+            <th>代表技术</th>
+            <th>典型应用</th>
+            <th>发展状态</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>第一阶段：辅助增强</td>
+            <td>AI作为工具，辅助用户完成特定任务</td>
+            <td>智能搜索、自动补全、内容推荐</td>
+            <td>GitHub Copilot、智能编辑器</td>
+            <td><span class="tech-badge mature">成熟应用</span></td>
+          </tr>
+          <tr>
+            <td>第二阶段：对话交互</td>
+            <td>基于自然语言的人机对话成为主要交互方式</td>
+            <td>LLM、RAG、对话式UI</td>
+            <td>ChatGPT、智能助手</td>
+            <td><span class="tech-badge mature">广泛应用</span></td>
+          </tr>
+          <tr>
+            <td>第三阶段：多模态交互</td>
+            <td>结合语音、视觉、手势等多种交互模式</td>
+            <td>多模态AI模型、计算机视觉</td>
+            <td>AI设计助手、虚拟试衣</td>
+            <td><span class="tech-badge emerging">快速发展</span></td>
+          </tr>
+          <tr>
+            <td>第四阶段：意图理解与预测</td>
+            <td>AI能理解用户潜在意图并预测行为</td>
+            <td>意图识别、行为预测、上下文感知</td>
+            <td>预测性UI、自适应界面</td>
+            <td><span class="tech-badge emerging">初步应用</span></td>
+          </tr>
+          <tr>
+            <td>第五阶段：自主代理</td>
+            <td>AI作为自主代理，代表用户执行复杂任务</td>
+            <td>AI代理、多代理协作、自主决策</td>
+            <td>虚拟助理、自动化工作流</td>
+            <td><span class="tech-badge research">研究阶段</span></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 交互范式演进 -->
+  <section id="evolution" class="mb-16">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold mb-4">前端交互范式的演进</h2>
+      <p class="text-gray-600 max-w-3xl mx-auto">从传统的图形界面到AI驱动的自然交互，前端交互范式正经历深刻变革。</p>
+    </div>
+
+    <div class="timeline-container">
+      <div class="timeline-item">
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+          <h3 class="text-xl font-semibold mb-2">传统WIMP范式 (1980s-2010s)</h3>
+          <p class="text-gray-600 mb-4">窗口、图标、菜单、指针构成了传统GUI的基础，用户通过鼠标和键盘与界面交互。</p>
+          <div class="demo-container">
+            <div class="flex items-center justify-center">
+              <div class="bg-gray-200 w-64 h-48 rounded-lg shadow-md overflow-hidden">
+                <div class="bg-gray-800 text-white text-xs p-2 flex justify-between items-center">
+                  <div class="flex space-x-1">
+                    <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                    <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                    <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                  </div>
+                  <span>Traditional UI</span>
+                </div>
+                <div class="p-2">
+                  <div class="bg-white rounded p-1 mb-2 text-xs">File</div>
+                  <div class="bg-white rounded p-1 mb-2 text-xs">Edit</div>
+                  <div class="bg-white rounded p-1 mb-2 text-xs">View</div>
+                  <div class="flex flex-wrap">
+                    <div class="w-8 h-8 bg-blue-100 m-1 rounded flex items-center justify-center text-xs">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-blue-500" viewBox="0 0 20 20"
+                           fill="currentColor">
+                        <path fill-rule="evenodd"
+                              d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm3 1h6v4H7V5zm8 8v2h1v1H4v-1h1v-2H4v-1h16v1h-1z"
+                              clip-rule="evenodd" />
+                      </svg>
+                    </div>
+                    <div class="w-8 h-8 bg-green-100 m-1 rounded flex items-center justify-center text-xs">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-500" viewBox="0 0 20 20"
+                           fill="currentColor">
+                        <path fill-rule="evenodd"
+                              d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"
+                              clip-rule="evenodd" />
+                      </svg>
+                    </div>
+                    <div class="w-8 h-8 bg-yellow-100 m-1 rounded flex items-center justify-center text-xs">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-yellow-500" viewBox="0 0 20 20"
+                           fill="currentColor">
+                        <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+          <h3 class="text-xl font-semibold mb-2">触控与移动优先 (2010s)</h3>
+          <p class="text-gray-600 mb-4">智能手机的普及带来了触控界面和移动优先设计，手势操作成为重要交互方式。</p>
+          <div class="demo-container">
+            <div class="flex items-center justify-center">
+              <div class="bg-black w-64 h-96 rounded-3xl shadow-lg p-2 relative">
+                <div class="bg-white w-full h-full rounded-2xl overflow-hidden">
+                  <div class="bg-gray-100 p-4">
+                    <div class="w-32 h-6 bg-gray-300 rounded-full mx-auto"></div>
+                  </div>
+                  <div class="p-2">
+                    <div class="grid grid-cols-4 gap-2">
+                      <div class="w-full aspect-square bg-blue-100 rounded-lg flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-500" fill="none"
+                             viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                      </div>
+                      <div class="w-full aspect-square bg-green-100 rounded-lg flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-500" fill="none"
+                             viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                      </div>
+                      <div class="w-full aspect-square bg-purple-100 rounded-lg flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-500" fill="none"
+                             viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                        </svg>
+                      </div>
+                      <div class="w-full aspect-square bg-red-100 rounded-lg flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" fill="none"
+                             viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                      </div>
+                    </div>
+                    <div class="mt-4 space-y-2">
+                      <div class="w-full h-12 bg-gray-200 rounded-lg"></div>
+                      <div class="w-full h-12 bg-gray-200 rounded-lg"></div>
+                      <div class="w-full h-12 bg-gray-200 rounded-lg"></div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-gray-300 rounded-full"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+          <h3 class="text-xl font-semibold mb-2">对话式UI (2016-至今)</h3>
+          <p class="text-gray-600 mb-4">聊天机器人和语音助手的兴起，使自然语言成为与应用交互的重要方式。</p>
+          <div class="demo-container">
+            <div class="chat-container">
+              <div class="chat-messages">
+                <div class="message ai">
+                  <div class="message-content">
+                    <p>你好！我是AI助手，有什么可以帮助你的吗？</p>
+                  </div>
+                </div>
+                <div class="message user">
+                  <div class="message-content">
+                    <p>帮我创建一个新项目</p>
+                  </div>
+                </div>
+                <div class="message ai">
+                  <div class="message-content">
+                    <p>好的，您想创建什么类型的项目？我可以帮您创建网站、移动应用或数据分析项目。</p>
+                  </div>
+                </div>
+                <div class="message user">
+                  <div class="message-content">
+                    <p>一个React网站项目</p>
+                  </div>
+                </div>
+                <div class="message ai">
+                  <div class="message-content">
+                    <p>正在为您创建React项目...完成！项目已创建，您可以在"我的项目"中查看。需要我帮您设置基本组件吗？</p>
+                  </div>
+                </div>
+              </div>
+              <div class="chat-input">
+                <input type="text" placeholder="输入消息..."
+                       class="focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <button>发送</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+          <h3 class="text-xl font-semibold mb-2">多模态AI交互 (2020-至今)</h3>
+          <p class="text-gray-600 mb-4">结合文本、语音、视觉等多种模态，实现更自然、直观的人机交互体验。</p>
+          <div class="demo-container">
+            <div class="flex flex-col items-center">
+              <div class="relative w-full max-w-md">
+                <div class="bg-gray-100 rounded-lg p-4 mb-4">
+                  <div class="flex items-center mb-2">
+                    <div class="voice-wave mr-2">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </div>
+                    <span class="text-sm text-gray-500">正在聆听...</span>
+                  </div>
+                  <p class="text-gray-700">"分析这张图片并创建类似的设计"</p>
+                </div>
+                <div class="flex space-x-2 mb-4">
+                  <div class="w-1/2 bg-gray-200 rounded-lg h-32 flex items-center justify-center text-gray-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24"
+                         stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <span class="ml-2">上传图片</span>
+                  </div>
+                  <div class="w-1/2 bg-gray-200 rounded-lg h-32 flex items-center justify-center text-gray-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24"
+                         stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                    </svg>
+                    <span class="ml-2">手绘草图</span>
+                  </div>
+                </div>
+                <div class="bg-white border border-gray-200 rounded-lg p-4">
+                  <p class="text-gray-700 mb-2">根据您的输入，我创建了以下设计：</p>
+                  <div
+                    class="bg-gradient-to-r from-blue-100 to-purple-100 h-40 rounded-lg mb-2 flex items-center justify-center">
+                    <span class="text-gray-500">AI生成的设计预览</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <button class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm">使用此设计</button>
+                    <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm">重新生成</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+          <h3 class="text-xl font-semibold mb-2">意图驱动界面 (正在兴起)</h3>
+          <p class="text-gray-600 mb-4">AI能够理解用户意图，预测需求，主动提供相关功能和信息，减少用户操作步骤。</p>
+          <div class="demo-container">
+            <div class="bg-white rounded-lg shadow-md max-w-md mx-auto overflow-hidden">
+              <div class="bg-indigo-600 text-white p-4">
+                <h4 class="font-medium">智能工作台</h4>
+              </div>
+              <div class="p-4">
+                <div class="bg-indigo-50 rounded-lg p-3 mb-4">
+                  <p class="text-sm text-indigo-800">
+                    <span class="font-medium">AI助手:</span> 我注意到您正在处理季度报告。根据您的日程安排，您有一个相关会议将在明天举行。我已经准备了以下资源：
+                  </p>
+                </div>
+                <div class="space-y-3">
+                  <div class="flex items-center p-2 bg-gray-50 rounded-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500 mr-2" fill="none"
+                         viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <span class="text-sm">上季度财务报告摘要</span>
+                  </div>
+                  <div class="flex items-center p-2 bg-gray-50 rounded-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500 mr-2" fill="none"
+                         viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <span class="text-sm">明天会议议程和参会人员</span>
+                  </div>
+                  <div class="flex items-center p-2 bg-gray-50 rounded-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500 mr-2" fill="none"
+                         viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                    </svg>
+                    <span class="text-sm">报告模板（基于您之前的使用习惯）</span>
+                  </div>
+                </div>
+                <div class="mt-4">
+                  <div class="progress-container">
+                    <div class="progress-bar" style="width: 65%"></div>
+                  </div>
+                  <p class="text-xs text-gray-500">当前报告完成度：65%</p>
+                </div>
+                <div class="mt-4 flex space-x-2">
+                  <button class="bg-indigo-600 text-white px-3 py-1 rounded text-sm">继续编辑报告</button>
+                  <button class="bg-gray-200 text-gray-700 px-3 py-1 rounded text-sm">查看会议详情</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+          <h3 class="text-xl font-semibold mb-2">自主代理界面 (未来趋势)</h3>
+          <p class="text-gray-600 mb-4">AI作为自主代理，能够理解复杂任务，自动执行多步骤操作，甚至在不同应用间协调工作。</p>
+          <div class="demo-container">
+            <div class="bg-gray-900 text-gray-300 rounded-lg p-4 max-w-md mx-auto font-mono text-sm">
+              <div class="mb-2 text-green-400">$ AI代理已激活</div>
+              <div class="mb-2 text-blue-400">> 请帮我规划下周的产品发布会</div>
+              <div class="mb-2">正在分析任务要求...</div>
+              <div class="mb-2">任务拆解完成，执行计划：</div>
+              <div class="mb-2 pl-4">1. 检查日历，寻找合适时间段 ✓</div>
+              <div class="mb-2 pl-4">2. 向团队成员发送可用性调查 ✓</div>
+              <div class="mb-2 pl-4">3. 预订会议室和设备 ✓</div>
+              <div class="mb-2 pl-4">4. 创建发布会议程草案 ✓</div>
+              <div class="mb-2 pl-4">5. 准备产品演示材料 [进行中]</div>
+              <div class="mb-2 pl-4">6. 邀请关键利益相关者 [待处理]</div>
+              <div class="mb-2 pl-4">7. 安排后续跟进事项 [待处理]</div>
+              <div class="mb-2">当前进度：57%</div>
+              <div class="mb-2 text-yellow-400">需要您的输入：是否邀请媒体参加此次发布会？</div>
+              <div class="flex items-center">
+                <span class="text-green-400 mr-1">$</span>
+                <span class="animate-pulse">|</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 技术支撑 -->
+  <section id="technologies" class="mb-16">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold mb-4">AI前端的技术支撑体系</h2>
+      <p class="text-gray-600 max-w-3xl mx-auto">多种AI技术的融合正在为前端交互范式的变革提供强大支持。</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="card bg-white p-6 rounded-lg shadow-sm">
+        <h3 class="text-xl font-semibold mb-4">大型语言模型 (LLM)</h3>
+        <p class="text-gray-600 mb-4">LLM为前端应用提供了强大的自然语言理解和生成能力，使对话式交互成为可能。</p>
+        <div class="code-container">
+          <div class="code-header">
+            <span>LLM集成示例</span>
+            <button class="copy-btn">复制</button>
+          </div>
+          <pre><code class="language-javascript">
+// 前端集成LLM的简化示例
+import { OpenAI } from 'openai';
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
+async function handleUserInput(userMessage) {
+  try {
+    // 显示加载状态
+    setIsLoading(true);
+
+    // 调用LLM API
+    const response = await openai.chat.completions.create({
+      model: "gpt-4",
+      messages: [
+        { role: "system", content: "你是一个前端开发助手。" },
+        { role: "user", content: userMessage }
+      ],
+      temperature: 0.7,
+      max_tokens: 500
+    });
+
+    // 处理响应
+    const aiResponse = response.choices[0].message.content;
+    addMessageToChat({ role: 'assistant', content: aiResponse });
+
+    // 根据响应内容执行相应操作
+    if (aiResponse.includes('创建组件')) {
+      suggestComponentTemplate(aiResponse);
+    } else if (aiResponse.includes('修复错误')) {
+      analyzeAndFixCode(userMessage);
+    }
+  } catch (error) {
+    console.error('LLM调用错误:', error);
+    addMessageToChat({
+      role: 'system',
+      content: '处理您的请求时出现错误，请重试。'
+    });
+  } finally {
+    setIsLoading(false);
+  }
+}
+                        </code></pre>
+        </div>
+        <div class="mt-4">
+          <h4 class="font-medium mb-2">关键应用：</h4>
+          <ul class="list-disc list-inside text-gray-600 space-y-1">
+            <li>智能代码补全与生成</li>
+            <li>自然语言界面设计</li>
+            <li>内容智能生成与优化</li>
+            <li>用户意图理解与任务执行</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card bg-white p-6 rounded-lg shadow-sm">
+        <h3 class="text-xl font-semibold mb-4">多模态AI</h3>
+        <p class="text-gray-600 mb-4">结合视觉、语音、文本等多种模态的AI模型，使前端应用能够理解和生成多种形式的内容。</p>
+        <div class="ai-model-demo" id="multimodalDemo">
+          <div class="flex flex-col items-center justify-center h-full">
+            <div class="mb-4 relative">
+              <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97" alt="Laptop with code"
+                   class="w-64 h-40 object-cover rounded-lg">
+              <div class="absolute inset-0 bg-indigo-600 bg-opacity-50 flex items-center justify-center rounded-lg">
+                <div class="text-white text-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mx-auto mb-2" fill="none" viewBox="0 0 24 24"
+                       stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                  </svg>
+                  <span>图像分析中...</span>
+                </div>
+              </div>
+            </div>
+            <div class="bg-gray-100 p-3 rounded-lg w-64">
+              <p class="text-sm text-gray-700">
+                <span class="font-medium">AI分析结果：</span>
+                这是一个显示代码编辑器的笔记本电脑屏幕。检测到JavaScript代码，可能是React组件。建议创建响应式布局组件。
+              </p>
+            </div>
+            <div class="mt-4 flex space-x-2">
+              <button class="bg-indigo-600 text-white px-3 py-1 rounded text-sm">生成组件代码</button>
+              <button class="bg-gray-200 text-gray-700 px-3 py-1 rounded text-sm">分析代码问题</button>
+            </div>
+          </div>
+        </div>
+        <div class="mt-4">
+          <h4 class="font-medium mb-2">关键应用：</h4>
+          <ul class="list-disc list-inside text-gray-600 space-y-1">
+            <li>图像识别与生成</li>
+            <li>语音交互界面</li>
+            <li>手势和动作识别</li>
+            <li>跨模态内容转换</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card bg-white p-6 rounded-lg shadow-sm">
+        <h3 class="text-xl font-semibold mb-4">边缘AI与本地处理</h3>
+        <p class="text-gray-600 mb-4">将AI能力部署到用户设备上，减少延迟，提高隐私保护，实现离线智能交互。</p>
+        <div class="code-container">
+          <div class="code-header">
+            <span>边缘AI集成示例</span>
+            <button class="copy-btn">复制</button>
+          </div>
+          <pre><code class="language-javascript">
+// 使用TensorFlow.js在浏览器中运行AI模型
+import * as tf from '@tensorflow/tfjs';
+import * as speechCommands from '@tensorflow-models/speech-commands';
+
+// 加载语音命令识别模型
+async function loadSpeechCommandModel() {
+  const recognizer = speechCommands.create('BROWSER_FFT');
+  await recognizer.ensureModelLoaded();
+
+  // 设置要识别的命令
+  const commands = ['上一页', '下一页', '返回', '确认', '取消'];
+  recognizer.listen(result => {
+    // 获取预测结果
+    const scores = result.scores;
+    const maxScore = Math.max(...scores);
+    const maxScoreIndex = scores.indexOf(maxScore);
+    const predictedCommand = commands[maxScoreIndex - 1]; // 减1是因为第一个索引是背景噪音
+
+    if (maxScore > 0.75) {
+      console.log('识别到命令:', predictedCommand);
+      executeCommand(predictedCommand);
+    }
+  }, {
+    includeSpectrogram: true,
+    probabilityThreshold: 0.75
+  });
+
+  return recognizer;
+}
+
+// 执行识别到的命令
+function executeCommand(command) {
+  switch(command) {
+    case '上一页':
+      navigateToPreviousPage();
+      break;
+    case '下一页':
+      navigateToNextPage();
+      break;
+    case '返回':
+      goBack();
+      break;
+    case '确认':
+      confirm();
+      break;
+    case '取消':
+      cancel();
+      break;
+  }
+}
+
+// 初始化
+(async () => {
+  try {
+    const model = await loadSpeechCommandModel();
+    console.log('语音命令模型加载成功');
+  } catch (error) {
+    console.error('模型加载失败:', error);
+  }
+})();
+                        </code></pre>
+        </div>
+        <div class="mt-4">
+          <h4 class="font-medium mb-2">关键应用：</h4>
+          <ul class="list-disc list-inside text-gray-600 space-y-1">
+            <li>实时语音和手势识别</li>
+            <li>离线智能功能</li>
+            <li>隐私保护的数据处理</li>
+            <li>低延迟响应的交互体验</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card bg-white p-6 rounded-lg shadow-sm">
+        <h3 class="text-xl font-semibold mb-4">检索增强生成 (RAG)</h3>
+        <p class="text-gray-600 mb-4">结合知识库检索和生成式AI，使前端应用能够提供更准确、更相关的内容和功能。</p>
+        <div class="code-container">
+          <div class="code-header">
+            <span>RAG实现示例</span>
+            <button class="copy-btn">复制</button>
+          </div>
+          <pre><code class="language-javascript">
+// 前端RAG系统简化实现
+import { OpenAI } from 'openai';
+import { VectorDBClient } from './vector-db';
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
+// 向量数据库客户端
+const vectorDB = new VectorDBClient({
+  endpoint: process.env.VECTOR_DB_ENDPOINT,
+  apiKey: process.env.VECTOR_DB_API_KEY,
+});
+
+// 将文本转换为向量嵌入
+async function getEmbedding(text) {
+  const response = await openai.embeddings.create({
+    model: "text-embedding-ada-002",
+    input: text,
+  });
+  return response.data[0].embedding;
+}
+
+// 基于用户查询检索相关文档
+async function retrieveRelevantDocs(query, limit = 5) {
+  // 获取查询的向量表示
+  const queryEmbedding = await getEmbedding(query);
+
+  // 在向量数据库中搜索相似文档
+  const results = await vectorDB.search({
+    vector: queryEmbedding,
+    limit: limit,
+    namespace: 'product-documentation'
+  });
+
+  return results.map(result => result.document);
+}
+
+// RAG处理用户查询
+async function processUserQuery(query) {
+  try {
+    // 1. 检索相关文档
+    const relevantDocs = await retrieveRelevantDocs(query);
+
+    // 2. 构建上下文
+    const context = relevantDocs.map(doc => doc.content).join('\n\n');
+
+    // 3. 使用LLM生成回答
+    const response = await openai.chat.completions.create({
+      model: "gpt-4",
+      messages: [
+        {
+          role: "system",
+          content: `你是一个产品支持助手。使用以下信息回答用户问题。
+                    如果无法从提供的信息中找到答案，请说明你不知道，不要编造信息。
+
+                    参考信息:
+                    ${context}`
+        },
+        { role: "user", content: query }
+      ],
+      temperature: 0.5,
+    });
+
+    return {
+      answer: response.choices[0].message.content,
+      sources: relevantDocs.map(doc => ({
+        title: doc.title,
+        url: doc.url
+      }))
+    };
+  } catch (error) {
+    console.error('RAG处理错误:', error);
+    throw error;
+  }
+}
+                        </code></pre>
+        </div>
+        <div class="mt-4">
+          <h4 class="font-medium mb-2">关键应用：</h4>
+          <ul class="list-disc list-inside text-gray-600 space-y-1">
+            <li>智能客服与支持系统</li>
+            <li>上下文感知的文档助手</li>
+            <li>个性化内容推荐</li>
+            <li>知识密集型应用</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-12 bg-white p-6 rounded-lg shadow-sm">
+      <h3 class="text-xl font-semibold mb-4">技术成熟度与应用前景</h3>
+      <div class="overflow-x-auto">
+        <table class="comparison-table">
+          <thead>
+          <tr>
+            <th>技术</th>
+            <th>成熟度</th>
+            <th>前端应用难度</th>
+            <th>主要挑战</th>
+            <th>预期影响</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>大型语言模型 (LLM)</td>
+            <td><span class="tech-badge mature">成熟</span></td>
+            <td>中等</td>
+            <td>API成本、延迟、定制化</td>
+            <td>高 - 已经广泛应用于对话式界面</td>
+          </tr>
+          <tr>
+            <td>多模态AI</td>
+            <td><span class="tech-badge emerging">快速发展</span></td>
+            <td>中高</td>
+            <td>模型大小、实时性能、准确性</td>
+            <td>高 - 将彻底改变内容创建和交互方式</td>
+          </tr>
+          <tr>
+            <td>边缘AI</td>
+            <td><span class="tech-badge emerging">快速发展</span></td>
+            <td>高</td>
+            <td>模型优化、设备兼容性、性能</td>
+            <td>中高 - 提升响应速度和隐私保护</td>
+          </tr>
+          <tr>
+            <td>检索增强生成 (RAG)</td>
+            <td><span class="tech-badge mature">成熟</span></td>
+            <td>中等</td>
+            <td>知识库维护、检索精度</td>
+            <td>高 - 提升AI回答的准确性和可靠性</td>
+          </tr>
+          <tr>
+            <td>AI代理</td>
+            <td><span class="tech-badge research">研究阶段</span></td>
+            <td>非常高</td>
+            <td>自主决策、安全性、可控性</td>
+            <td>极高 - 可能彻底改变人机交互模式</td>
+          </tr>
+          <tr>
+            <td>神经接口</td>
+            <td><span class="tech-badge research">早期研究</span></td>
+            <td>极高</td>
+            <td>硬件限制、信号处理、伦理问题</td>
+            <td>变革性 - 可能开创全新交互范式</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 应用场景 -->
+  <section id="scenarios" class="mb-16">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold mb-4">AI前端的应用场景</h2>
+      <p class="text-gray-600 max-w-3xl mx-auto">不同场景下AI前端交互范式的应用与差异。</p>
+    </div>
+
+    <div class="tab-container">
+      <div class="tab active" data-tab="pc-mobile">PC端 vs. 移动端</div>
+      <div class="tab" data-tab="tob-toc">ToB vs. ToC</div>
+      <div class="tab" data-tab="industry">行业特定应用</div>
+    </div>
+
+    <div class="tab-content active" id="pc-mobile">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="card bg-white p-6 rounded-lg shadow-sm">
+          <h3 class="text-xl font-semibold mb-4">PC端AI交互特点</h3>
+          <ul class="space-y-3 text-gray-600">
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500 mr-2 mt-0.5" fill="none"
+                   viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span><strong>复杂任务处理：</strong>适合处理多步骤、复杂工作流的AI辅助功能，如代码生成、设计辅助</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500 mr-2 mt-0.5" fill="none"
+                   viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span><strong>多窗口协作：</strong>AI可以跨多个应用窗口协调工作，提供上下文相关的辅助</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500 mr-2 mt-0.5" fill="none"
+                   viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span><strong>丰富的输入方式：</strong>结合键盘、鼠标、语音等多种输入方式，提供灵活交互</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500 mr-2 mt-0.5" fill="none"
+                   viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span><strong>侧边栏助手：</strong>非侵入式AI助手，可在不中断主要工作流的情况下提供帮助</span>
+            </li>
+          </ul>
+
+          <div class="mt-6">
+            <h4 class="font-medium mb-3">典型应用示例：</h4>
+            <div class="demo-container">
+              <div class="bg-gray-100 rounded-lg p-4">
+                <div class="flex">
+                  <div class="w-3/4 bg-white rounded-lg shadow-sm p-3 mr-2">
+                    <div class="h-6 bg-gray-200 rounded mb-2 w-1/2"></div>
+                    <div class="h-4 bg-gray-200 rounded mb-2"></div>
+                    <div class="h-4 bg-gray-200 rounded mb-2 w-3/4"></div>
+                    <div class="h-32 bg-gray-200 rounded mb-2"></div>
+                    <div class="h-4 bg-gray-200 rounded w-1/2"></div>
+                  </div>
+                  <div class="w-1/4 bg-indigo-50 rounded-lg shadow-sm p-3">
+                    <div class="h-4 bg-indigo-200 rounded mb-2"></div>
+                    <div class="h-4 bg-indigo-100 rounded mb-2"></div>
+                    <div class="h-4 bg-indigo-100 rounded mb-2"></div>
+                    <div class="h-4 bg-indigo-100 rounded mb-2"></div>
+                    <div class="h-8 bg-indigo-500 rounded mt-4"></div>
+                  </div>
+                </div>
+                <p class="text-xs text-center mt-2 text-gray-500">PC端侧边栏AI助手界面</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card bg-white p-6 rounded-lg shadow-sm">
+          <h3 class="text-xl font-semibold mb-4">移动端AI交互特点</h3>
+          <ul class="space-y-3 text-gray-600">
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500 mr-2 mt-0.5" fill="none"
+                   viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span><strong>简化输入：</strong>利用AI减少在小屏幕上的输入负担，如语音输入、预测文本</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500 mr-2 mt-0.5" fill="none"
+                   viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span><strong>上下文感知：</strong>基于位置、时间等上下文信息提供智能建议和服务</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500 mr-2 mt-0.5" fill="none"
+                   viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span><strong>多模态交互：</strong>结合相机、麦克风等设备传感器，实现更丰富的交互方式</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500 mr-2 mt-0.5" fill="none"
+                   viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span><strong>浮动式助手：</strong>可随时唤起的AI助手，不占用主要屏幕空间</span>
+            </li>
+          </ul>
+
+          <div class="mt-6">
+            <h4 class="font-medium mb-3">典型应用示例：</h4>
+            <div class="demo-container">
+              <div class="flex justify-center">
+                <div class="bg-black w-64 h-96 rounded-3xl shadow-lg p-2 relative">
+                  <div class="bg-white w-full h-full rounded-2xl overflow-hidden">
+                    <div class="bg-indigo-600 p-4 text-white">
+                      <div class="text-sm font-medium">智能助手</div>
+                    </div>
+                    <div class="p-3">
+                      <div class="chat-bubble ai">
+                        您好！我能帮您做什么？
+                      </div>
+                      <div class="chat-bubble user">
+                        帮我找附近的咖啡店
+                      </div>
+                      <div class="chat-bubble ai">
+                        正在查找您附近的咖啡店...
+                      </div>
+                      <div class="bg-gray-100 rounded-lg p-2 my-2">
+                        <div class="h-20 bg-gray-300 rounded-lg mb-2"></div>
+                        <div class="text-xs">已找到5家附近的咖啡店</div>
+                      </div>
+                      <div class="chat-bubble ai">
+                        这是附近评分最高的咖啡店，要查看详情吗？
+                      </div>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-3 bg-white border-t">
+                      <div class="flex">
+                        <div class="flex-1 bg-gray-100 rounded-full px-4 py-2 text-sm text-gray-400">输入消息...</div>
+                        <button
+                          class="ml-2 bg-indigo-600 text-white rounded-full w-8 h-8 flex items-center justify-center">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                               stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8 bg-white p-6 rounded-lg shadow-sm">
+        <h3 class="text-xl font-semibold mb-4">PC端与移动端AI交互对比</h3>
+        <div class="overflow-x-auto">
+          <table class="comparison-table">
+            <thead>
+            <tr>
+              <th>特性</th>
+              <th>PC端</th>
+              <th>移动端</th>
+              <th>设计考量</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>屏幕空间</td>
+              <td>充足，可同时显示多个信息面板</td>
+              <td>有限，需要精简和优先级排序</td>
+              <td>移动端需要更智能的信息筛选和渐进式披露</td>
+            </tr>
+            <tr>
+              <td>输入方式</td>
+              <td>键盘、鼠标为主，语音为辅</td>
+              <td>触控、语音为主，键盘为辅</td>
+              <td>移动端应更多利用AI简化输入过程</td>
+            </tr>
+            <tr>
+              <td>交互深度</td>
+              <td>支持复杂、多步骤任务</td>
+              <td>倾向于简单、快速完成的任务</td>
+              <td>PC端可设计更复杂的AI工作流，移动端注重效率</td>
+            </tr>
+            <tr>
+              <td>上下文信息</td>
+              <td>主要来自应用内部状态</td>
+              <td>可结合位置、传感器等丰富信息</td>
+              <td>移动端AI可更多利用环境上下文提供智能服务</td>
+            </tr>
+            <tr>
+              <td>AI助手呈现</td>
+              <td>侧边栏、浮动窗口、专用面板</td>
+              <td>覆盖层、底部抽屉、浮动按钮</td>
+              <td>需考虑不同设备上的自然交互位置和手势</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="tab-content" id="tob-toc">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="card bg-white p-6 rounded-lg shadow-sm">
+          <h3 class="text-xl font-semibold mb-4">ToB场景AI交互特点</h3>
+          <ul class="space-y-3 text-gray-600">
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500 mr-2 mt-0.5" fill="none"
+                   viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span><strong>工作流自动化：</strong>AI辅助完成复杂业务流程，减少重复性工作</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500 mr-2 mt-0.5" fill="none"
+                   viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span><strong>数据分析与可视化：</strong>智能解读复杂数据，生成洞察和报告</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500 mr-2 mt-0.5" fill="none"
+                   viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span><strong>专业知识辅助：</strong>提供领域专业知识，辅助决策制定</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500 mr-2 mt-0.5" fill="none"
+                   viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span><strong>安全与合规：</strong>强调数据安全、隐私保护和合规性</span>
+            </li>
+          </ul>
+
+          <div class="mt-6">
+            <h4 class="font-medium mb-3">典型应用示例：</h4>
+            <div class="demo-container">
+              <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="bg-gray-800 text-white p-3 flex justify-between items-center">
+                  <span class="font-medium">企业数据分析平台</span>
+                  <div class="flex space-x-2">
+                    <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                    <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                    <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <div class="flex mb-4">
+                    <div class="w-2/3 pr-4">
+                      <div class="h-6 bg-gray-200 rounded mb-2 w-1/2"></div>
+                      <div class="h-32 bg-gray-100 rounded mb-2"></div>
+                      <div class="grid grid-cols-2 gap-2">
+                        <div class="h-24 bg-blue-50 rounded"></div>
+                        <div class="h-24 bg-green-50 rounded"></div>
+                        <div class="h-24 bg-yellow-50 rounded"></div>
+                        <div class="h-24 bg-purple-50 rounded"></div>
+                      </div>
+                    </div>
+                    <div class="w-1/3 bg-indigo-50 rounded-lg p-3">
+                      <div class="text-sm font-medium mb-2">AI分析助手</div>
+                      <div class="text-xs text-gray-600 mb-3">
+                        我注意到Q2销售数据有显著增长，主要来自西部地区。建议关注以下几点：
+                      </div>
+                      <ul class="text-xs text-gray-600 list-disc list-inside mb-3">
+                        <li>西部地区新客户增长率达23%</li>
+                        <li>产品A的销售额环比增长15%</li>
+                        <li>营销活动ROI提升了8%</li>
+                      </ul>
+                      <div class="text-xs text-gray-600">
+                        需要我生成详细分析报告吗？
+                      </div>
+                      <div class="flex mt-2 space-x-2">
+                        <button class="bg-indigo-600 text-white text-xs px-2 py-1 rounded">生成报告</button>
+                        <button class="bg-gray-200 text-gray-700 text-xs px-2 py-1 rounded">提问</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card bg-white p-6 rounded-lg shadow-sm">
+          <h3 class="text-xl font-semibold mb-4">ToC场景AI交互特点</h3>
+          <ul class="space-y-3 text-gray-600">
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500 mr-2 mt-0.5" fill="none"
+                   viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span><strong>个性化体验：</strong>基于用户偏好和行为提供定制化内容和服务</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500 mr-2 mt-0.5" fill="none"
+                   viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span><strong>简单直观：</strong>注重易用性和直观交互，降低学习成本</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500 mr-2 mt-0.5" fill="none"
+                   viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span><strong>情感化设计：</strong>具有个性和情感特征的AI交互，增强用户连接</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500 mr-2 mt-0.5" fill="none"
+                   viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span><strong>娱乐与社交：</strong>融入游戏化、社交元素的AI交互体验</span>
+            </li>
+          </ul>
+
+          <div class="mt-6">
+            <h4 class="font-medium mb-3">典型应用示例：</h4>
+            <div class="demo-container">
+              <div class="bg-gradient-to-r from-purple-500 to-indigo-600 rounded-lg shadow-md overflow-hidden">
+                <div class="p-4 text-white">
+                  <div class="flex items-center justify-between mb-4">
+                    <div class="text-lg font-medium">音乐助手</div>
+                    <div class="w-8 h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24"
+                           stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15.536a5 5 0 001.414 1.414m2.828-4.242a1 1 0 010 1.414m2.828-2.828a1 1 0 010 1.414m-9.9-2.828a9 9 0 010 12.728" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="mb-4">
+                    <div class="h-32 bg-white bg-opacity-10 rounded-lg flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-white opacity-50" fill="none"
+                           viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="chat-bubble white">
+                    嘿！根据你最近听的歌曲，我创建了一个新的播放列表，风格类似于你喜欢的indie rock，但加入了一些你可能会喜欢的新艺术家。要听听看吗？
+                  </div>
+                  <div class="flex mt-4 space-x-2">
+                    <button class="bg-white text-indigo-600 px-3 py-1 rounded-full text-sm font-medium flex-1">播放
+                    </button>
+                    <button class="bg-white bg-opacity-20 text-white px-3 py-1 rounded-full text-sm flex-1">保存列表
+                    </button>
+                    <button class="bg-white bg-opacity-20 text-white px-3 py-1 rounded-full text-sm flex-1">换一批
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8 bg-white p-6 rounded-lg shadow-sm">
+        <h3 class="text-xl font-semibold mb-4">ToB与ToC场景AI交互对比</h3>
+        <div class="overflow-x-auto">
+          <table class="comparison-table">
+            <thead>
+            <tr>
+              <th>特性</th>
+              <th>ToB场景</th>
+              <th>ToC场景</th>
+              <th>设计考量</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>主要目标</td>
+              <td>提高效率、辅助决策、专业支持</td>
+              <td>提升体验、个性化服务、娱乐社交</td>
+              <td>ToB注重实用性和专业性，ToC注重情感连接和易用性</td>
+            </tr>
+            <tr>
+              <td>交互复杂度</td>
+              <td>可接受较高复杂度，专业用户能适应</td>
+              <td>需要简单直观，降低学习成本</td>
+              <td>ToB可设计更专业的功能，ToC需更注重引导和简化</td>
+            </tr>
+            <tr>
+              <td>个性化程度</td>
+              <td>基于角色和工作流的个性化</td>
+              <td>基于个人偏好和行为的深度个性化</td>
+              <td>ToC场景个性化程度通常更高，更注重情感连接</td>
+            </tr>
+            <tr>
+              <td>数据与隐私</td>
+              <td>严格的数据安全和合规要求</td>
+              <td>平衡便利性和隐私保护</td>
+              <td>ToB场景需要更严格的数据处理和访问控制</td>
+            </tr>
+            <tr>
+              <td>AI呈现方式</td>
+              <td>专业助手、数据分析师、专家顾问</td>
+              <td>友好伙伴、生活助手、娱乐伙伴</td>
+              <td>ToB更注重专业形象，ToC更注重亲和力和情感连接</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="industry">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="card bg-white p-6 rounded-lg shadow-sm">
+          <div class="flex items-center mb-4">
+            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24"
+                   stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold">医疗健康</h3>
+          </div>
+          <p class="text-gray-600 mb-4">AI前端在医疗领域需要兼顾专业性和易用性，同时确保数据安全和隐私保护。</p>
+          <div class="space-y-3">
+            <div class="feature-item">
+              <div class="feature-title">智能诊断辅助</div>
+              <div class="feature-desc">帮助医生分析医学影像和患者数据，提供诊断建议</div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-title">患者健康管理</div>
+              <div class="feature-desc">个性化健康建议、用药提醒和生活方式指导</div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-title">医学知识查询</div>
+              <div class="feature-desc">自然语言查询医学知识库，获取专业信息</div>
+            </div>
+          </div>
+          <div class="mt-4">
+            <div class="text-sm font-medium mb-2">交互设计要点：</div>
+            <ul class="text-sm text-gray-600 list-disc list-inside">
+              <li>清晰准确的信息呈现</li>
+              <li>严格的数据隐私保护</li>
+              <li>专业术语与普通用户语言的平衡</li>
+              <li>关键决策的人机协作机制</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card bg-white p-6 rounded-lg shadow-sm">
+          <div class="flex items-center mb-4">
+            <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-3">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24"
+                   stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold">金融服务</h3>
+          </div>
+          <p class="text-gray-600 mb-4">金融领域的AI前端需要平衡专业性与易用性，同时确保安全性和合规性。</p>
+          <div class="space-y-3">
+            <div class="feature-item">
+              <div class="feature-title">智能投资顾问</div>
+              <div class="feature-desc">基于用户风险偏好和市场分析提供投资建议</div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-title">个人财务管理</div>
+              <div class="feature-desc">智能分类支出、预算规划和财务健康分析</div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-title">风险评估与预警</div>
+              <div class="feature-desc">识别异常交易模式，提供风险预警</div>
+            </div>
+          </div>
+          <div class="mt-4">
+            <div class="text-sm font-medium mb-2">交互设计要点：</div>
+            <ul class="text-sm text-gray-600 list-disc list-inside">
+              <li>数据可视化与简化复杂信息</li>
+              <li>多层次安全验证机制</li>
+              <li>透明的AI决策解释</li>
+              <li>个性化与合规性的平衡</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card bg-white p-6 rounded-lg shadow-sm">
+          <div class="flex items-center mb-4">
+            <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center mr-3">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24"
+                   stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold">教育培训</h3>
+          </div>
+          <p class="text-gray-600 mb-4">教育领域的AI前端需要创造个性化、互动性强的学习体验，适应不同学习者需求。</p>
+          <div class="space-y-3">
+            <div class="feature-item">
+              <div class="feature-title">个性化学习路径</div>
+              <div class="feature-desc">基于学习风格和进度自动调整内容难度和形式</div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-title">智能辅导与反馈</div>
+              <div class="feature-desc">实时解答问题，提供针对性反馈和建议</div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-title">协作学习支持</div>
+              <div class="feature-desc">促进小组协作，智能分配任务和角色</div>
+            </div>
+          </div>
+          <div class="mt-4">
+            <div class="text-sm font-medium mb-2">交互设计要点：</div>
+            <ul class="text-sm text-gray-600 list-disc list-inside">
+              <li>游戏化元素与激励机制</li>
+              <li>多感官学习体验</li>
+              <li>适应不同认知水平的界面</li>
+              <li>进度可视化与成就展示</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="card bg-white p-6 rounded-lg shadow-sm">
+          <h3 class="text-xl font-semibold mb-4">零售电商</h3>
+          <div class="demo-container">
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+              <div class="p-4 border-b">
+                <div class="flex justify-between items-center">
+                  <div class="text-lg font-medium">智能购物助手</div>
+                  <div class="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-600" fill="none"
+                         viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="p-4">
+                <div class="chat-bubble ai">
+                  我注意到你最近浏览了几款运动鞋。你是在寻找跑步鞋还是日常穿着的鞋子？
+                </div>
+                <div class="chat-bubble user">
+                  我需要一双适合长距离跑步的鞋子
+                </div>
+                <div class="chat-bubble ai">
+                  明白了！根据你的浏览历史和偏好，我推荐以下几款长距离跑步鞋：
+                </div>
+                <div class="product-recommendations">
+                  <div class="grid grid-cols-3 gap-2 my-3">
+                    <div class="product-card">
+                      <div class="h-20 bg-gray-100 rounded-lg mb-1"></div>
+                      <div class="text-xs font-medium truncate">超轻缓震跑鞋</div>
+                      <div class="text-xs text-indigo-600">¥899</div>
+                    </div>
+                    <div class="product-card">
+                      <div class="h-20 bg-gray-100 rounded-lg mb-1"></div>
+                      <div class="text-xs font-medium truncate">专业马拉松鞋</div>
+                      <div class="text-xs text-indigo-600">¥1299</div>
+                    </div>
+                    <div class="product-card">
+                      <div class="h-20 bg-gray-100 rounded-lg mb-1"></div>
+                      <div class="text-xs font-medium truncate">稳定支撑跑鞋</div>
+                      <div class="text-xs text-indigo-600">¥799</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="chat-bubble ai">
+                  这些都适合长距离跑步，第一款提供出色的缓震性能，第二款是专业马拉松比赛用鞋，第三款提供额外的稳定性支撑。你更注重哪方面的特性？
+                </div>
+              </div>
+              <div class="p-3 border-t">
+                <div class="flex">
+                  <input type="text" placeholder="输入您的问题..."
+                         class="flex-1 border rounded-l-lg px-3 py-2 text-sm focus:outline-none">
+                  <button class="bg-indigo-600 text-white rounded-r-lg px-4 py-2 text-sm">发送</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4">
+            <div class="text-sm font-medium mb-2">关键AI交互特点：</div>
+            <ul class="text-sm text-gray-600 list-disc list-inside">
+              <li>个性化产品推荐</li>
+              <li>对话式购物体验</li>
+              <li>虚拟试穿/试用</li>
+              <li>智能库存和价格建议</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card bg-white p-6 rounded-lg shadow-sm">
+          <h3 class="text-xl font-semibold mb-4">创意设计</h3>
+          <div class="demo-container">
+            <div class="bg-gray-900 text-white rounded-lg shadow-md overflow-hidden">
+              <div class="p-4 border-b border-gray-700">
+                <div class="flex justify-between items-center">
+                  <div class="text-lg font-medium">AI设计协作工具</div>
+                  <div class="flex space-x-2">
+                    <div class="w-8 h-8 bg-purple-800 rounded-full flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-200" fill="none"
+                           viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <div class="w-8 h-8 bg-blue-800 rounded-full flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-200" fill="none"
+                           viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="p-4">
+                <div class="mb-4">
+                  <div
+                    class="h-40 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-white opacity-50" fill="none"
+                         viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                </div>
+                <div class="bg-gray-800 rounded-lg p-3 mb-3">
+                  <div class="text-sm text-gray-300 mb-2">
+                    <span class="text-purple-400 font-medium">AI助手:</span> 我分析了你的设计草图，这是一个产品登录页面。我建议：
+                  </div>
+                  <ul class="text-xs text-gray-400 list-disc list-inside mb-2">
+                    <li>增加对比度以提高可读性</li>
+                    <li>简化表单，减少输入字段</li>
+                    <li>添加社交登录选项</li>
+                    <li>调整配色方案以符合品牌指南</li>
+                  </ul>
+                  <div class="text-xs text-gray-400">
+                    需要我生成这些修改的预览吗？
+                  </div>
+                </div>
+                <div class="flex space-x-2">
+                  <button class="bg-purple-600 text-white text-xs px-3 py-2 rounded-lg flex-1">生成修改预览</button>
+                  <button class="bg-gray-700 text-white text-xs px-3 py-2 rounded-lg flex-1">应用部分建议</button>
+                  <button class="bg-gray-700 text-white text-xs px-3 py-2 rounded-lg flex-1">忽略</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4">
+            <div class="text-sm font-medium mb-2">关键AI交互特点：</div>
+            <ul class="text-sm text-gray-600 list-disc list-inside">
+              <li>创意生成与迭代</li>
+              <li>设计评估与建议</li>
+              <li>风格迁移与变体创建</li>
+              <li>协作式创意过程</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 设计模式与最佳实践 -->
+  <!-- AI前端设计模式与最佳实践 -->
+  <section id="patterns" class="mb-16">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold mb-4">AI前端设计模式与最佳实践</h2>
+      <p class="text-gray-600 max-w-3xl mx-auto">构建有效AI交互体验的设计模式、原则和实践方法。</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+      <div class="card bg-white p-6 rounded-lg shadow-sm">
+        <h3 class="text-xl font-semibold mb-4">AI交互设计原则</h3>
+        <div class="space-y-4">
+          <div class="principle-item">
+            <div class="principle-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+            <div class="principle-content">
+              <h4 class="font-medium">透明度与可控性</h4>
+              <p>
+                用户应了解AI的能力边界，并能控制AI的行为和决策。清晰传达AI的工作方式，提供调整和覆盖AI决策的选项。
+              </p>
+            </div>
+          </div>
+
+          <div class="principle-item">
+            <div class="principle-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+            </div>
+            <div class="principle-content">
+              <h4 class="font-medium">信任与可靠性</h4>
+              <p>
+                建立用户对AI系统的信任，确保AI行为的一致性和可预测性。明确标识AI生成的内容，提供信息来源和置信度。
+              </p>
+            </div>
+          </div>
+
+          <div class="principle-item">
+            <div class="principle-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+              </svg>
+            </div>
+            <div class="principle-content">
+              <h4 class="font-medium">自然对话与上下文理解</h4>
+              <p>
+                设计自然、流畅的对话交互，保持上下文连贯性。支持多轮对话，记住用户偏好和历史交互。
+              </p>
+            </div>
+          </div>
+
+          <div class="principle-item">
+            <div class="principle-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+              </svg>
+            </div>
+            <div class="principle-content">
+              <h4 class="font-medium">适应性与个性化</h4>
+              <p>
+                AI交互应随时间学习和适应用户偏好和行为。提供个性化体验，同时尊重用户隐私。
+              </p>
+            </div>
+          </div>
+
+          <div class="principle-item">
+            <div class="principle-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+            </div>
+            <div class="principle-content">
+              <h4 class="font-medium">反馈循环与改进</h4>
+              <p>
+                设计收集用户反馈的机制，持续改进AI性能。让用户轻松纠正AI错误，并从这些纠正中学习。
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-white p-6 rounded-lg shadow-sm">
+        <h3 class="text-xl font-semibold mb-4">常见AI交互模式</h3>
+        <div class="space-y-6">
+          <div class="pattern-item">
+            <div class="pattern-header">
+              <div class="pattern-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                </svg>
+              </div>
+              <h4 class="font-medium">对话式界面</h4>
+            </div>
+            <p class="text-gray-600 text-sm mb-2">通过自然语言对话与AI系统交互，可以是文本或语音形式。</p>
+            <div class="pattern-example">
+              <div class="chat-container">
+                <div class="chat-bubble ai">您好！我能帮您做什么？</div>
+                <div class="chat-bubble user">我需要预订下周五的机票</div>
+                <div class="chat-bubble ai">好的，您想飞往哪个城市？</div>
+              </div>
+            </div>
+            <div class="text-xs text-gray-500 mt-2">
+              <strong>适用场景：</strong> 客服、信息查询、任务执行
+            </div>
+          </div>
+
+          <div class="pattern-item">
+            <div class="pattern-header">
+              <div class="pattern-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                </svg>
+              </div>
+              <h4 class="font-medium">智能建议与自动完成</h4>
+            </div>
+            <p class="text-gray-600 text-sm mb-2">AI主动提供上下文相关的建议，或自动完成用户正在执行的任务。</p>
+            <div class="pattern-example">
+              <div class="suggestion-container">
+                <div class="input-field">编写一封邮件给客户关于新产品发布</div>
+                <div class="suggestions">
+                  <div class="suggestion-item active">介绍新产品的主要功能和优势</div>
+                  <div class="suggestion-item">包含产品发布时间和价格信息</div>
+                  <div class="suggestion-item">添加限时优惠或早鸟价格</div>
+                </div>
+              </div>
+            </div>
+            <div class="text-xs text-gray-500 mt-2">
+              <strong>适用场景：</strong> 内容创作、编程、表单填写
+            </div>
+          </div>
+
+          <div class="pattern-item">
+            <div class="pattern-header">
+              <div class="pattern-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+                </svg>
+              </div>
+              <h4 class="font-medium">自适应界面</h4>
+            </div>
+            <p class="text-gray-600 text-sm mb-2">界面根据用户行为、偏好和上下文动态调整和重组。</p>
+            <div class="pattern-example">
+              <div class="adaptive-ui">
+                <div class="adaptive-header">
+                  <div class="user-greeting">下午好，张先生</div>
+                  <div class="context-info">周三 | 北京 | 25°C</div>
+                </div>
+                <div class="adaptive-content">
+                  <div class="priority-item">即将开始的会议 (15分钟后)</div>
+                  <div class="priority-item">3条未读重要邮件</div>
+                  <div class="priority-item">今日待办事项 (5/8)</div>
+                </div>
+              </div>
+            </div>
+            <div class="text-xs text-gray-500 mt-2">
+              <strong>适用场景：</strong> 仪表盘、个人助手、工作空间
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="card bg-white p-6 rounded-lg shadow-sm">
+        <h3 class="text-xl font-semibold mb-4">错误处理与优雅降级</h3>
+        <p class="text-gray-600 mb-4">AI系统可能会出错或不确定，设计应优雅地处理这些情况。</p>
+        <div class="space-y-3">
+          <div class="best-practice">
+            <div class="practice-title">承认不确定性</div>
+            <div class="practice-desc">当AI不确定时，坦率承认并提供备选方案</div>
+          </div>
+          <div class="best-practice">
+            <div class="practice-title">提供纠正机制</div>
+            <div class="practice-desc">让用户能够轻松纠正AI错误，并从中学习</div>
+          </div>
+          <div class="best-practice">
+            <div class="practice-title">备用路径</div>
+            <div class="practice-desc">提供非AI路径作为备选，确保功能可访问性</div>
+          </div>
+        </div>
+        <div class="mt-4 p-3 bg-gray-50 rounded-lg">
+          <div class="text-sm font-medium mb-2">示例：优雅的错误处理</div>
+          <div class="error-handling-example">
+            <div class="chat-bubble ai error">
+              抱歉，我无法确定这个问题的答案。我可以：
+              <ul class="mt-2 ml-4 list-disc text-sm">
+                <li>尝试重新表述您的问题</li>
+                <li>搜索相关信息</li>
+                <li>转接给人工客服</li>
+              </ul>
+            </div>
+            <div class="flex mt-2 space-x-2">
+              <button class="bg-indigo-600 text-white text-xs px-2 py-1 rounded">重新表述</button>
+              <button class="bg-white border border-gray-300 text-gray-700 text-xs px-2 py-1 rounded">搜索</button>
+              <button class="bg-white border border-gray-300 text-gray-700 text-xs px-2 py-1 rounded">人工客服</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-white p-6 rounded-lg shadow-sm">
+        <h3 class="text-xl font-semibold mb-4">多模态交互设计</h3>
+        <p class="text-gray-600 mb-4">结合多种输入和输出模式，创造更自然、直观的AI交互体验。</p>
+        <div class="space-y-3">
+          <div class="best-practice">
+            <div class="practice-title">模式互补</div>
+            <div class="practice-desc">不同模式应相互补充，而非简单重复</div>
+          </div>
+          <div class="best-practice">
+            <div class="practice-title">情境适应</div>
+            <div class="practice-desc">根据使用环境和任务选择最合适的交互模式</div>
+          </div>
+          <div class="best-practice">
+            <div class="practice-title">无缝切换</div>
+            <div class="practice-desc">允许用户在不同交互模式间自然切换</div>
+          </div>
+        </div>
+        <div class="mt-4 p-3 bg-gray-50 rounded-lg">
+          <div class="text-sm font-medium mb-2">多模态交互示例</div>
+          <div class="multimodal-example">
+            <div class="flex items-center justify-between mb-2">
+              <div class="flex items-center">
+                <div class="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center mr-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-indigo-600" fill="none"
+                       viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                  </svg>
+                </div>
+                <span class="text-xs font-medium">语音输入</span>
+              </div>
+              <div class="flex items-center">
+                <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-600" fill="none" viewBox="0 0 24 24"
+                       stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                  </svg>
+                </div>
+                <span class="text-xs font-medium">图像识别</span>
+              </div>
+            </div>
+            <div class="h-24 bg-gray-100 rounded-lg flex items-center justify-center mb-2">
+              <span class="text-xs text-gray-500">多模态输入区域</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center">
+                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-blue-600" fill="none" viewBox="0 0 24 24"
+                       stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                  </svg>
+                </div>
+                <span class="text-xs font-medium">文本输出</span>
+              </div>
+              <div class="flex items-center">
+                <div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center mr-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-yellow-600" fill="none"
+                       viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
+                </div>
+                <span class="text-xs font-medium">可视化</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-white p-6 rounded-lg shadow-sm">
+        <h3 class="text-xl font-semibold mb-4">AI透明度与可解释性</h3>
+        <p class="text-gray-600 mb-4">帮助用户理解AI的工作原理、能力边界和决策依据。</p>
+        <div class="space-y-3">
+          <div class="best-practice">
+            <div class="practice-title">解释AI决策</div>
+            <div class="practice-desc">提供AI推荐和决策背后的理由和依据</div>
+          </div>
+          <div class="best-practice">
+            <div class="practice-title">置信度指示</div>
+            <div class="practice-desc">显示AI对其回答或建议的确信程度</div>
+          </div>
+          <div class="best-practice">
+            <div class="practice-title">数据来源透明</div>
+            <div class="practice-desc">明确AI使用的信息来源和参考依据</div>
+          </div>
+        </div>
+        <div class="mt-4 p-3 bg-gray-50 rounded-lg">
+          <div class="text-sm font-medium mb-2">透明度设计示例</div>
+          <div class="transparency-example">
+            <div class="ai-recommendation">
+              <div class="flex items-center mb-2">
+                <div class="w-6 h-6 bg-indigo-100 rounded-full flex items-center justify-center mr-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-indigo-600" fill="none"
+                       viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <span class="text-xs font-medium">AI推荐</span>
+                <div class="ml-auto flex items-center">
+                  <span class="text-xs text-indigo-600 font-medium mr-1">85%</span>
+                  <span class="text-xs text-gray-500">置信度</span>
+                </div>
+              </div>
+              <div class="text-xs mb-2">
+                基于您的投资偏好，推荐增加低风险债券基金的配置比例。
+              </div>
+              <div class="bg-white p-2 rounded border text-xs">
+                <div class="font-medium mb-1">推荐依据：</div>
+                <ul class="list-disc list-inside text-gray-600">
+                  <li>您的风险承受评估结果为"保守型"</li>
+                  <li>市场波动性近期增加</li>
+                  <li>您的投资组合债券占比低于同类投资者</li>
+                </ul>
+                <div class="mt-1 text-indigo-600 cursor-pointer">查看详细分析</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 实现技术与框架 -->
+  <section id="tech" class="mb-16">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold mb-4">AI前端实现技术与框架</h2>
+      <p class="text-gray-600 max-w-3xl mx-auto">探索构建AI前端交互的关键技术、框架和工具。</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+      <div class="card bg-white p-6 rounded-lg shadow-sm">
+        <h3 class="text-xl font-semibold mb-4">前端AI集成技术</h3>
+        <div class="space-y-6">
+          <div class="tech-item">
+            <div class="tech-header">
+              <div class="tech-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                </svg>
+              </div>
+              <h4 class="font-medium">自然语言处理 (NLP)</h4>
+            </div>
+            <p class="text-gray-600 text-sm mb-2">处理和理解人类语言，支持对话式交互和内容生成。</p>
+            <div class="tech-details">
+              <div class="tech-libs">
+                <span class="tech-lib">TensorFlow.js</span>
+                <span class="tech-lib">Transformers.js</span>
+                <span class="tech-lib">Natural</span>
+              </div>
+              <div class="code-snippet">
+                                    <pre><code>// 使用Transformers.js进行文本生成
+import { pipeline } from '@huggingface/transformers';
+
+const generator = await pipeline('text-generation');
+const result = await generator('AI前端设计的关键是', {
+  max_length: 50
+});</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="tech-item">
+            <div class="tech-header">
+              <div class="tech-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <h4 class="font-medium">计算机视觉</h4>
+            </div>
+            <p class="text-gray-600 text-sm mb-2">处理和分析图像和视频内容，实现视觉识别和交互。</p>
+            <div class="tech-details">
+              <div class="tech-libs">
+                <span class="tech-lib">TensorFlow.js</span>
+                <span class="tech-lib">MediaPipe</span>
+                <span class="tech-lib">face-api.js</span>
+              </div>
+              <div class="code-snippet">
+                                    <pre><code>// 使用TensorFlow.js进行图像分类
+import * as tf from '@tensorflow/tfjs';
+import * as mobilenet from '@tensorflow-models/mobilenet';
+
+const img = document.getElementById('input-image');
+const model = await mobilenet.load();
+const predictions = await model.classify(img);</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="tech-item">
+            <div class="tech-header">
+              <div class="tech-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </div>
+              <h4 class="font-medium">推荐系统</h4>
+            </div>
+            <p class="text-gray-600 text-sm mb-2">基于用户行为和偏好提供个性化内容和功能推荐。</p>
+            <div class="tech-details">
+              <div class="tech-libs">
+                <span class="tech-lib">ml5.js</span>
+                <span class="tech-lib">brain.js</span>
+                <span class="tech-lib">TensorFlow.js</span>
+              </div>
+              <div class="code-snippet">
+                                    <pre><code>// 使用brain.js构建简单推荐系统
+import brain from 'brain.js';
+
+const network = new brain.NeuralNetwork();
+network.train([
+  { input: { action: 'click', category: 'tech' }, output: { recommend: 1 } },
+  { input: { action: 'ignore', category: 'fashion' }, output: { recommend: 0 } }
+]);
+
+const output = network.run({ action: 'view', category: 'tech' });</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-white p-6 rounded-lg shadow-sm">
+        <h3 class="text-xl font-semibold mb-4">AI API与服务集成</h3>
+        <p class="text-gray-600 mb-4">通过API集成第三方AI服务，快速为前端应用添加智能功能。</p>
+        <div class="space-y-6">
+          <div class="api-item">
+            <div class="api-header">
+              <h4 class="font-medium">大型语言模型 (LLM) API</h4>
+              <div class="api-providers">
+                <span class="provider">OpenAI</span>
+                <span class="provider">Google</span>
+                <span class="provider">Anthropic</span>
+              </div>
+            </div>
+            <p class="text-gray-600 text-sm mb-2">集成强大的语言模型，实现自然语言理解、生成和对话功能。</p>
+            <div class="code-snippet">
+                                <pre><code>// 使用OpenAI API生成内容
+async function generateContent(prompt) {
+  const response = await fetch('https://api.openai.com/v1/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${API_KEY}`
+    },
+    body: JSON.stringify({
+      model: 'text-davinci-003',
+      prompt: prompt,
+      max_tokens: 150
+    })
+  });
+  return await response.json();
+}</code></pre>
+            </div>
+            <div class="api-features">
+              <span class="feature">对话生成</span>
+              <span class="feature">内容创作</span>
+              <span class="feature">代码生成</span>
+              <span class="feature">文本分析</span>
+            </div>
+          </div>
+
+          <div class="api-item">
+            <div class="api-header">
+              <h4 class="font-medium">多模态AI服务</h4>
+              <div class="api-providers">
+                <span class="provider">Azure</span>
+                <span class="provider">AWS</span>
+                <span class="provider">Clarifai</span>
+              </div>
+            </div>
+            <p class="text-gray-600 text-sm mb-2">集成图像识别、语音处理和多模态理解能力。</p>
+            <div class="api-features">
+              <span class="feature">图像分析</span>
+              <span class="feature">语音转文本</span>
+              <span class="feature">情感分析</span>
+              <span class="feature">对象检测</span>
+            </div>
+            <div class="integration-example">
+              <div class="example-header">集成示例：图像分析</div>
+              <div class="example-content">
+                <div class="h-24 bg-gray-100 rounded-lg flex items-center justify-center mb-2">
+                  <span class="text-xs text-gray-500">图像输入区域</span>
+                </div>
+                <div class="example-result">
+                  <div class="result-item">
+                    <span class="result-label">对象:</span>
+                    <span class="result-value">笔记本电脑 (92%)</span>
+                  </div>
+                  <div class="result-item">
+                    <span class="result-label">场景:</span>
+                    <span class="result-value">办公室 (87%)</span>
+                  </div>
+                  <div class="result-item">
+                    <span class="result-label">文本:</span>
+                    <span class="result-value">检测到屏幕文字</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="card bg-white p-6 rounded-lg shadow-sm">
+        <h3 class="text-xl font-semibold mb-4">前端框架与AI集成</h3>
+        <p class="text-gray-600 mb-4">主流前端框架中集成AI功能的方法和最佳实践。</p>
+        <div class="space-y-4">
+          <div class="framework-item">
+            <div class="framework-logo">
+              <svg viewBox="0 0 24 24" class="h-6 w-6 text-blue-500" fill="currentColor">
+                <path
+                  d="M14.23 12.004a2.236 2.236 0 0 1-2.235 2.236 2.236 2.236 0 0 1-2.236-2.236 2.236 2.236 0 0 1 2.235-2.236 2.236 2.236 0 0 1 2.236 2.236zm2.648-10.69c-1.346 0-3.107.96-4.888 2.622-1.78-1.653-3.542-2.602-4.887-2.602-.41 0-.783.093-1.106.278-1.375.793-1.683 3.264-.973 6.365C1.98 8.917 0 10.42 0 12.004c0 1.59 1.99 3.097 5.043 4.03-.704 3.113-.39 5.588.988 6.38.32.187.69.275 1.102.275 1.345 0 3.107-.96 4.888-2.624 1.78 1.654 3.542 2.603 4.887 2.603.41 0 .783-.09 1.106-.275 1.374-.792 1.683-3.263.973-6.365C22.02 15.096 24 13.59 24 12.004c0-1.59-1.99-3.097-5.043-4.032.704-3.11.39-5.587-.988-6.38-.318-.184-.688-.277-1.092-.278zm-.005 1.09v.006c.225 0 .406.044.558.127.666.382.955 1.835.73 3.704-.054.46-.142.945-.25 1.44-.96-.236-2.006-.417-3.107-.534-.66-.905-1.345-1.727-2.035-2.447 1.592-1.48 3.087-2.292 4.105-2.295zm-9.77.02c1.012 0 2.514.808 4.11 2.28-.686.72-1.37 1.537-2.02 2.442-1.107.117-2.154.298-3.113.538-.112-.49-.195-.964-.254-1.42-.23-1.868.054-3.32.714-3.707.19-.09.4-.127.563-.132zm4.882 3.05c.455.468.91.992 1.36 1.564-.44-.02-.89-.034-1.345-.034-.46 0-.915.01-1.36.034.44-.572.895-1.096 1.345-1.565zM12 8.1c.74 0 1.477.034 2.202.093.406.582.802 1.203 1.183 1.86.372.64.71 1.29 1.018 1.946-.308.655-.646 1.31-1.013 1.95-.38.66-.773 1.288-1.18 1.87-.728.063-1.466.098-2.21.098-.74 0-1.477-.035-2.202-.093-.406-.582-.802-1.204-1.183-1.86-.372-.64-.71-1.29-1.018-1.946.303-.657.646-1.313 1.013-1.954.38-.66.773-1.286 1.18-1.868.728-.064 1.466-.098 2.21-.098zm-3.635.254c-.24.377-.48.763-.704 1.16-.225.39-.435.782-.635 1.174-.265-.656-.49-1.31-.676-1.947.64-.15 1.315-.283 2.015-.386zm7.26 0c.695.103 1.365.23 2.006.387-.18.632-.405 1.282-.66 1.933-.2-.39-.41-.783-.64-1.174-.225-.392-.465-.774-.705-1.146zm3.063.675c.484.15.944.317 1.375.498 1.732.74 2.852 1.708 2.852 2.476-.005.768-1.125 1.74-2.857 2.475-.42.18-.88.342-1.355.493-.28-.958-.646-1.956-1.1-2.98.45-1.017.81-2.01 1.085-2.964zm-13.395.004c.278.96.645 1.957 1.1 2.98-.45 1.017-.812 2.01-1.086 2.964-.484-.15-.944-.318-1.37-.5-1.732-.737-2.852-1.706-2.852-2.474 0-.768 1.12-1.742 2.852-2.476.42-.18.88-.342 1.356-.494zm11.678 4.28c.265.657.49 1.312.676 1.948-.64.157-1.316.29-2.016.39.24-.375.48-.762.705-1.158.225-.39.435-.788.636-1.18zm-9.945.02c.2.392.41.783.64 1.175.23.39.465.772.705 1.143-.695-.102-1.365-.23-2.006-.386.18-.63.406-1.282.66-1.933zM17.92 16.32c.112.493.2.968.254 1.423.23 1.868-.054 3.32-.714 3.708-.147.09-.338.128-.563.128-1.012 0-2.514-.807-4.11-2.28.686-.72 1.37-1.536 2.02-2.44 1.107-.118 2.154-.3 3.113-.54zm-11.83.01c.96.234 2.006.415 3.107.532.66.905 1.345 1.727 2.035 2.446-1.595 1.483-3.092 2.295-4.11 2.295-.22-.005-.406-.05-.553-.132-.666-.38-.955-1.834-.73-3.703.054-.46.142-.944.25-1.438zm4.56.64c.44.02.89.034 1.345.034.46 0 .915-.01 1.36-.034-.44.572-.895 1.095-1.345 1.565-.455-.47-.91-.993-1.36-1.565z" />
+              </svg>
+            </div>
+            <div class="framework-content">
+              <h5 class="font-medium">React</h5>
+              <p class="text-sm text-gray-600 mb-2">使用React Hooks和Context管理AI状态和交互。</p>
+              <div class="code-snippet">
+                                    <pre><code>// AI聊天组件示例
+function AIChatComponent() {
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState('');
+  const aiContext = useContext(AIContext);
+
+  const sendMessage = async () => {
+    // 添加用户消息
+    setMessages([...messages, { text: input, sender: 'user' }]);
+
+    // 获取AI响应
+    const response = await aiContext.getResponse(input);
+    setMessages(prev => [...prev, { text: response, sender: 'ai' }]);
+    setInput('');
+  };
+
+  return (
+    <div className="chat-container">
+      {/* 消息显示区域 */}
+      <div className="messages">
+        {messages.map((msg, i) => (
+          <div key={i} className={`message ${msg.sender}`}>
+            {msg.text}
+          </div>
+        ))}
+      </div>
+
+      {/* 输入区域 */}
+      <div className="input-area">
+        <input
+          value={input}
+          onChange={e => setInput(e.target.value)}
+          placeholder="输入消息..."
+        />
+        <button onClick={sendMessage}>发送</button>
+      </div>
+    </div>
+  );
+}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-white p-6 rounded-lg shadow-sm">
+        <h3 class="text-xl font-semibold mb-4">AI性能优化</h3>
+        <p class="text-gray-600 mb-4">优化前端AI应用的性能和用户体验的关键技术。</p>
+        <div class="space-y-4">
+          <div class="optimization-item">
+            <div class="optimization-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24"
+                   stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div class="optimization-content">
+              <h5 class="font-medium">模型量化与压缩</h5>
+              <p class="text-sm text-gray-600">减小模型大小，提高加载速度和运行效率。</p>
+              <ul class="text-xs text-gray-600 list-disc list-inside mt-1">
+                <li>使用量化技术减少模型精度但保持性能</li>
+                <li>模型剪枝移除不必要的神经网络连接</li>
+                <li>知识蒸馏从大模型提取关键能力到小模型</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="optimization-item">
+            <div class="optimization-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24"
+                   stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+            <div class="optimization-content">
+              <h5 class="font-medium">渐进式加载</h5>
+              <p class="text-sm text-gray-600">优先加载核心功能，逐步增强AI能力。</p>
+              <ul class="text-xs text-gray-600 list-disc list-inside mt-1">
+                <li>基础UI立即可用，AI功能异步加载</li>
+                <li>模型分块加载，优先加载常用功能</li>
+                <li>使用WebWorkers在后台线程加载模型</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="optimization-item">
+            <div class="optimization-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24"
+                   stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+            </div>
+            <div class="optimization-content">
+              <h5 class="font-medium">缓存与预测</h5>
+              <p class="text-sm text-gray-600">缓存常见请求和预测用户行为提高响应速度。</p>
+              <ul class="text-xs text-gray-600 list-disc list-inside mt-1">
+                <li>缓存常见查询和响应</li>
+                <li>预测性加载可能需要的模型和数据</li>
+                <li>本地存储用户偏好和历史交互</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-white p-6 rounded-lg shadow-sm">
+        <h3 class="text-xl font-semibold mb-4">AI前端测试与评估</h3>
+        <p class="text-gray-600 mb-4">测试和评估AI前端应用的方法和指标。</p>
+        <div class="space-y-4">
+          <div class="testing-item">
+            <div class="testing-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24"
+                   stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div class="testing-content">
+              <h5 class="font-medium">功能测试</h5>
+              <p class="text-sm text-gray-600">验证AI功能的准确性和可靠性。</p>
+              <ul class="text-xs text-gray-600 list-disc list-inside mt-1">
+                <li>单元测试验证各AI组件功能</li>
+                <li>集成测试确保AI与其他系统协同工作</li>
+                <li>端到端测试模拟真实用户场景</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="testing-item">
+            <div class="testing-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24"
+                   stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+            </div>
+            <div class="testing-content">
+              <h5 class="font-medium">用户体验测试</h5>
+              <p class="text-sm text-gray-600">评估AI交互的易用性和用户满意度。</p>
+              <ul class="text-xs text-gray-600 list-disc list-inside mt-1">
+                <li>可用性测试观察用户如何与AI交互</li>
+                <li>A/B测试比较不同AI交互设计</li>
+                <li>用户满意度调查收集反馈</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="testing-item">
+            <div class="testing-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24"
+                   stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+            </div>
+            <div class="testing-content">
+              <h5 class="font-medium">性能评估</h5>
+              <p class="text-sm text-gray-600">测量AI功能的响应时间和资源使用。</p>
+              <ul class="text-xs text-gray-600 list-disc list-inside mt-1">
+                <li>响应时间测量</li>
+                <li>CPU和内存使用监控</li>
+                <li>电池消耗分析（移动设备）</li>
+              </ul>
+              <div class="performance-metrics mt-2">
+                <div class="metric">
+                  <div class="metric-label">模型加载时间</div>
+                  <div class="metric-bar">
+                    <div class="metric-fill" style="width: 70%"></div>
+                  </div>
+                  <div class="metric-value">1.2s</div>
+                </div>
+                <div class="metric">
+                  <div class="metric-label">推理响应时间</div>
+                  <div class="metric-bar">
+                    <div class="metric-fill" style="width: 60%"></div>
+                  </div>
+                  <div class="metric-value">300ms</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 案例研究 -->
+  <section id="cases" class="mb-16">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold mb-4">AI前端案例研究</h2>
+      <p class="text-gray-600 max-w-3xl mx-auto">探索成功的AI前端实现案例，分析其设计决策和实现方法。</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="card bg-white p-6 rounded-lg shadow-sm">
+        <div class="case-header mb-4">
+          <h3 class="text-xl font-semibold">智能编辑器：Notion AI</h3>
+          <div class="case-tags">
+            <span class="tag">内容生成</span>
+            <span class="tag">文本编辑</span>
+            <span class="tag">生产力工具</span>
+          </div>
+        </div>
+
+        <div class="case-content">
+          <div class="case-image mb-4">
+            <img src="https://via.placeholder.com/600x300?text=Notion+AI+Interface" alt="Notion AI Interface"
+                 class="rounded-lg w-full">
+          </div>
+
+          <div class="case-description mb-4">
+            <p class="text-gray-600">Notion
+              AI将人工智能无缝集成到文档编辑体验中，帮助用户生成内容、改进写作和组织信息。</p>
+          </div>
+
+          <div class="case-highlights mb-4">
+            <h4 class="font-medium mb-2">关键设计亮点：</h4>
+            <ul class="text-sm text-gray-600 list-disc list-inside">
+              <li>上下文感知的AI建议，基于当前文档内容</li>
+              <li>自然的命令界面，允许用户用自然语言指导AI</li>
+              <li>无缝集成到现有编辑流程中</li>
+              <li>透明的AI能力边界，清晰传达AI可以和不能做什么</li>
+            </ul>
+          </div>
+
+          <div class="case-implementation">
+            <h4 class="font-medium mb-2">实现技术：</h4>
+            <div class="tech-stack flex flex-wrap gap-2 mb-4">
+              <span class="tech-item">React</span>
+              <span class="tech-item">GPT模型</span>
+              <span class="tech-item">自定义编辑器框架</span>
+              <span class="tech-item">上下文管理</span>
+            </div>
+
+            <div class="implementation-details">
+              <div class="detail-item">
+                <div class="detail-title">上下文处理</div>
+                <div class="detail-desc">分析文档结构和内容，提取相关上下文发送给AI模型</div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-title">命令解析</div>
+                <div class="detail-desc">自然语言命令解析系统，将用户指令转化为具体AI任务</div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-title">结果整合</div>
+                <div class="detail-desc">将AI生成内容无缝整合到编辑器中，保持格式和样式一致性</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="case-lessons mt-4">
+            <h4 class="font-medium mb-2">经验教训：</h4>
+            <ul class="text-sm text-gray-600 list-disc list-inside">
+              <li>AI功能应该增强而非取代核心编辑体验</li>
+              <li>提供清晰的反馈机制让用户纠正或改进AI输出</li>
+              <li>渐进式引入AI功能，避免用户体验突变</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-white p-6 rounded-lg shadow-sm">
+        <div class="case-header mb-4">
+          <h3 class="text-xl font-semibold">AI驱动设计：Midjourney Web UI</h3>
+          <div class="case-tags">
+            <span class="tag">图像生成</span>
+            <span class="tag">创意工具</span>
+            <span class="tag">提示工程</span>
+          </div>
+        </div>
+
+        <div class="case-content">
+          <div class="case-image mb-4">
+            <img src="https://via.placeholder.com/600x300?text=Midjourney+Web+Interface" alt="Midjourney Web Interface"
+                 class="rounded-lg w-full">
+          </div>
+
+          <div class="case-description mb-4">
+            <p class="text-gray-600">
+              Midjourney的Web界面为AI图像生成提供了直观的用户体验，使创意人员能够通过文本提示创建高质量图像。</p>
+          </div>
+
+          <div class="case-highlights mb-4">
+            <h4 class="font-medium mb-2">关键设计亮点：</h4>
+            <ul class="text-sm text-gray-600 list-disc list-inside">
+              <li>简洁的提示输入界面，专注于创意表达</li>
+              <li>迭代式创作流程，允许用户从初始结果进一步探索</li>
+              <li>视觉反馈系统，显示生成进度和状态</li>
+              <li>社区和分享功能，促进创意交流</li>
+            </ul>
+          </div>
+
+          <div class="case-implementation">
+            <h4 class="font-medium mb-2">实现技术：</h4>
+            <div class="tech-stack flex flex-wrap gap-2 mb-4">
+              <span class="tech-item">Vue.js</span>
+              <span class="tech-item">WebSockets</span>
+              <span class="tech-item">扩散模型API</span>
+              <span class="tech-item">图像处理</span>
+            </div>
+
+            <div class="implementation-details">
+              <div class="detail-item">
+                <div class="detail-title">提示增强</div>
+                <div class="detail-desc">分析用户提示，提供建议和增强选项以改进结果</div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-title">实时进度</div>
+                <div class="detail-desc">使用WebSockets提供生成过程的实时更新和预览</div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-title">变体管理</div>
+                <div class="detail-desc">组织和管理多个生成变体，支持比较和选择</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="case-lessons mt-4">
+            <h4 class="font-medium mb-2">经验教训：</h4>
+            <ul class="text-sm text-gray-600 list-disc list-inside">
+              <li>提示工程是用户需要学习的关键技能，UI应该支持这一学习过程</li>
+              <li>处理生成延迟的用户体验至关重要</li>
+              <li>提供足够的控制选项，但避免过度复杂化界面</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 未来趋势 -->
+  <section id="future" class="mb-16">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold mb-4">AI前端未来趋势</h2>
+      <p class="text-gray-600 max-w-3xl mx-auto">探索AI前端设计与开发的新兴趋势和未来方向。</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="trend-card bg-gradient-to-br from-indigo-50 to-purple-50 p-6 rounded-lg shadow-sm">
+        <div class="trend-icon mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-indigo-600" fill="none" viewBox="0 0 24 24"
+               stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold mb-2">多模态交互的普及</h3>
+        <p class="text-gray-600 mb-4">
+          未来的AI前端将无缝整合文本、语音、视觉和手势等多种交互模式，创造更自然、直观的用户体验。</p>
+        <div class="trend-predictions">
+          <div class="prediction-item">
+            <div class="prediction-title">跨模态理解</div>
+            <div class="prediction-desc">AI能够理解和关联不同模态的信息，如根据图像回答问题</div>
+          </div>
+          <div class="prediction-item">
+            <div class="prediction-title">情境适应交互</div>
+            <div class="prediction-desc">根据用户环境和需求自动切换最合适的交互模式</div>
+          </div>
+          <div class="prediction-item">
+            <div class="prediction-title">多模态创作工具</div>
+            <div class="prediction-desc">结合文本、图像和音频的创意工具，支持跨模态内容创作</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="trend-card bg-gradient-to-br from-blue-50 to-cyan-50 p-6 rounded-lg shadow-sm">
+        <div class="trend-icon mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-blue-600" fill="none" viewBox="0 0 24 24"
+               stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold mb-2">边缘AI与本地处理</h3>
+        <p class="text-gray-600 mb-4">AI计算将越来越多地在用户设备上本地进行，减少延迟、提高隐私保护并支持离线功能。</p>
+        <div class="trend-predictions">
+          <div class="prediction-item">
+            <div class="prediction-title">轻量级模型</div>
+            <div class="prediction-desc">专为前端优化的高效AI模型，能在浏览器和移动设备上运行</div>
+          </div>
+          <div class="prediction-item">
+            <div class="prediction-title">混合处理架构</div>
+            <div class="prediction-desc">智能分配任务到本地或云端，根据复杂度和隐私需求</div>
+          </div>
+          <div class="prediction-item">
+            <div class="prediction-title">硬件加速集成</div>
+            <div class="prediction-desc">前端框架将更好地利用设备GPU和专用AI芯片</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="trend-card bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-lg shadow-sm">
+        <div class="trend-icon mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-green-600" fill="none" viewBox="0 0 24 24"
+               stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold mb-2">个性化与适应性界面</h3>
+        <p class="text-gray-600 mb-4">
+          AI将使界面能够根据用户行为、偏好和需求实时调整和个性化，创造真正以用户为中心的体验。</p>
+        <div class="trend-predictions">
+          <div class="prediction-item">
+            <div class="prediction-title">动态UI组件</div>
+            <div class="prediction-desc">根据用户交互模式和偏好自动调整界面元素</div>
+          </div>
+          <div class="prediction-item">
+            <div class="prediction-title">预测性界面</div>
+            <div class="prediction-desc">预测用户需求，提前准备和呈现相关功能和内容</div>
+          </div>
+          <div class="prediction-item">
+            <div class="prediction-title">情感响应设计</div>
+            <div class="prediction-desc">感知用户情绪状态，调整交互风格和响应方式</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 替换原有的路线图HTML结构 -->
+    <div class="mt-12 bg-white p-6 rounded-lg shadow-sm">
+      <h3 class="text-xl font-semibold mb-4">AI前端发展路线图</h3>
+      <div class="roadmap">
+        <div class="roadmap-timeline">
+          <div class="timeline-point current">
+            <div class="point-year">现在</div>
+            <div class="point-title">基础AI集成</div>
+            <ul class="point-features">
+              <li>API驱动的AI功能</li>
+              <li>基础对话界面</li>
+              <li>有限的本地AI处理</li>
+            </ul>
+          </div>
+          <div class="timeline-point">
+            <div class="point-year">近期</div>
+            <div class="point-title">增强交互体验</div>
+            <ul class="point-features">
+              <li>多模态交互成为标准</li>
+              <li>更强大的本地AI模型</li>
+              <li>上下文感知的界面</li>
+            </ul>
+          </div>
+          <div class="timeline-point">
+            <div class="point-year">中期</div>
+            <div class="point-title">自适应界面</div>
+            <ul class="point-features">
+              <li>动态生成的UI组件</li>
+              <li>个性化交互流程</li>
+              <li>AI辅助的开发工具</li>
+            </ul>
+          </div>
+          <div class="timeline-point">
+            <div class="point-year">远期</div>
+            <div class="point-title">智能环境</div>
+            <ul class="point-features">
+              <li>跨设备无缝AI体验</li>
+              <li>环境感知界面</li>
+              <li>自主学习和适应</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- 资源与工具 -->
+  <section id="resources" class="mb-16">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold mb-4">AI前端资源与工具</h2>
+      <p class="text-gray-600 max-w-3xl mx-auto">精选的AI前端设计与开发资源、库和工具。</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="card bg-white p-6 rounded-lg shadow-sm">
+        <h3 class="text-xl font-semibold mb-4">开发库与框架</h3>
+        <div class="space-y-4">
+          <div class="resource-item">
+            <div class="resource-header">
+              <h4 class="font-medium">TensorFlow.js</h4>
+              <a href="https://www.tensorflow.org/js" class="resource-link" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
+            </div>
+            <p class="text-sm text-gray-600 mb-2">在浏览器和Node.js中运行机器学习模型的JavaScript库。</p>
+            <div class="resource-tags">
+              <span class="resource-tag">机器学习</span>
+              <span class="resource-tag">神经网络</span>
+              <span class="resource-tag">模型部署</span>
+            </div>
+          </div>
+
+          <div class="resource-item">
+            <div class="resource-header">
+              <h4 class="font-medium">Hugging Face Transformers.js</h4>
+              <a href="https://huggingface.co/docs/transformers.js" class="resource-link" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
+            </div>
+            <p class="text-sm text-gray-600 mb-2">在浏览器中运行Transformer模型的库，支持NLP和计算机视觉任务。</p>
+            <div class="resource-tags">
+              <span class="resource-tag">NLP</span>
+              <span class="resource-tag">Transformers</span>
+              <span class="resource-tag">预训练模型</span>
+            </div>
+          </div>
+
+          <div class="resource-item">
+            <div class="resource-header">
+              <h4 class="font-medium">ml5.js</h4>
+              <a href="https://ml5js.org/" class="resource-link" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
+            </div>
+            <p class="text-sm text-gray-600 mb-2">友好、易用的机器学习库，为创意编码和艺术项目设计。</p>
+            <div class="resource-tags">
+              <span class="resource-tag">创意编码</span>
+              <span class="resource-tag">图像识别</span>
+              <span class="resource-tag">声音分类</span>
+            </div>
+          </div>
+
+          <div class="resource-item">
+            <div class="resource-header">
+              <h4 class="font-medium">MediaPipe</h4>
+              <a href="https://mediapipe.dev/" class="resource-link" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
+            </div>
+            <p class="text-sm text-gray-600 mb-2">跨平台框架，用于构建多模态机器学习管道，特别适合实时处理。</p>
+            <div class="resource-tags">
+              <span class="resource-tag">手势识别</span>
+              <span class="resource-tag">人脸检测</span>
+              <span class="resource-tag">姿态估计</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-white p-6 rounded-lg shadow-sm">
+        <h3 class="text-xl font-semibold mb-4">设计资源与指南</h3>
+        <div class="space-y-4">
+          <div class="resource-item">
+            <div class="resource-header">
+              <h4 class="font-medium">Google AI设计指南</h4>
+              <a href="https://pair.withgoogle.com/guidebook/" class="resource-link" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
+            </div>
+            <p class="text-sm text-gray-600 mb-2">以人为本的AI产品设计指南，涵盖交互模式、可解释性和用户控制。</p>
+            <div class="resource-tags">
+              <span class="resource-tag">设计原则</span>
+              <span class="resource-tag">最佳实践</span>
+              <span class="resource-tag">用户体验</span>
+            </div>
+          </div>
+
+          <div class="resource-item">
+            <div class="resource-header">
+              <h4 class="font-medium">Microsoft Responsible AI资源</h4>
+              <a href="https://www.microsoft.com/en-us/ai/responsible-ai-resources" class="resource-link"
+                 target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
+            </div>
+            <p class="text-sm text-gray-600 mb-2">负责任AI设计工具包和指南，帮助创建公平、包容和透明的AI系统。</p>
+            <div class="resource-tags">
+              <span class="resource-tag">伦理设计</span>
+              <span class="resource-tag">透明度</span>
+              <span class="resource-tag">公平性</span>
+            </div>
+          </div>
+
+          <div class="resource-item">
+            <div class="resource-header">
+              <h4 class="font-medium">AI模式设计库</h4>
+              <a href="https://www.aipatterns.design/" class="resource-link" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
+            </div>
+            <p class="text-sm text-gray-600 mb-2">AI交互设计模式集合，包含实例、最佳实践和实现指南。</p>
+            <div class="resource-tags">
+              <span class="resource-tag">设计模式</span>
+              <span class="resource-tag">UI组件</span>
+              <span class="resource-tag">交互设计</span>
+            </div>
+          </div>
+
+          <div class="resource-item">
+            <div class="resource-header">
+              <h4 class="font-medium">Anthropic Claude提示工程指南</h4>
+              <a href="https://docs.anthropic.com/claude/docs/introduction-to-prompting" class="resource-link"
+                 target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
+            </div>
+            <p class="text-sm text-gray-600 mb-2">设计有效提示的指南，帮助开发者更好地与大型语言模型交互。</p>
+            <div class="resource-tags">
+              <span class="resource-tag">提示工程</span>
+              <span class="resource-tag">LLM</span>
+              <span class="resource-tag">对话设计</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="card bg-white p-6 rounded-lg shadow-sm">
+        <h3 class="text-xl font-semibold mb-4">API服务</h3>
+        <div class="space-y-3">
+          <div class="api-service-item">
+            <div class="service-name">OpenAI API</div>
+            <div class="service-desc">访问GPT模型、DALL-E和Whisper进行文本、图像和语音处理</div>
+            <div class="service-features">
+              <span class="feature">文本生成</span>
+              <span class="feature">图像创建</span>
+              <span class="feature">语音转文本</span>
+            </div>
+          </div>
+
+          <div class="api-service-item">
+            <div class="service-name">Google Cloud AI</div>
+            <div class="service-desc">包含语言、视觉、语音和对话等多种AI服务</div>
+            <div class="service-features">
+              <span class="feature">自然语言</span>
+              <span class="feature">视觉API</span>
+              <span class="feature">对话平台</span>
+            </div>
+          </div>
+
+          <div class="api-service-item">
+            <div class="service-name">Hugging Face Inference API</div>
+            <div class="service-desc">访问数千个开源模型，用于各种AI任务</div>
+            <div class="service-features">
+              <span class="feature">文本分析</span>
+              <span class="feature">图像处理</span>
+              <span class="feature">多语言支持</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-white p-6 rounded-lg shadow-sm">
+        <h3 class="text-xl font-semibold mb-4">学习资源</h3>
+        <div class="space-y-3">
+          <div class="learning-resource">
+            <div class="resource-name">Deep Learning with JavaScript</div>
+            <div class="resource-type">书籍</div>
+            <div class="resource-desc">使用TensorFlow.js在浏览器中构建和训练神经网络的全面指南</div>
+          </div>
+
+          <div class="learning-resource">
+            <div class="resource-name">AI for Front-End Developers</div>
+            <div class="resource-type">在线课程</div>
+            <div class="resource-desc">专为前端开发者设计的AI集成实践课程</div>
+          </div>
+
+          <div class="learning-resource">
+            <div class="resource-name">Machine Learning for Web Developers</div>
+            <div class="resource-type">视频系列</div>
+            <div class="resource-desc">从基础到高级的Web开发者机器学习教程</div>
+          </div>
+
+          <div class="learning-resource">
+            <div class="resource-name">AI UX Design Principles</div>
+            <div class="resource-type">播客</div>
+            <div class="resource-desc">探讨AI产品设计原则和最佳实践的播客系列</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-white p-6 rounded-lg shadow-sm">
+        <h3 class="text-xl font-semibold mb-4">社区与论坛</h3>
+        <div class="space-y-3">
+          <div class="community-item">
+            <div class="community-name">TensorFlow.js Discord</div>
+            <div class="community-desc">TensorFlow.js开发者社区，讨论前端机器学习实现</div>
+            <a href="#" class="community-link">加入社区</a>
+          </div>
+
+          <div class="community-item">
+            <div class="community-name">AI UX Collective</div>
+            <div class="community-desc">专注于AI用户体验设计的设计师和开发者社区</div>
+            <a href="#" class="community-link">加入社区</a>
+          </div>
+
+          <div class="community-item">
+            <div class="community-name">Front-End AI GitHub组织</div>
+            <div class="community-desc">开源AI前端项目和工具的协作平台</div>
+            <a href="#" class="community-link">查看项目</a>
+          </div>
+
+          <div class="community-item">
+            <div class="community-name">AI Web Dev Reddit</div>
+            <div class="community-desc">讨论AI网页开发趋势、工具和实践的Reddit社区</div>
+            <a href="#" class="community-link">浏览讨论</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 联系与反馈 -->
+  <section id="contact" class="mb-16">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold mb-4">联系与反馈</h2>
+      <p class="text-gray-600 max-w-3xl mx-auto">有问题或建议？我们很乐意听取您的意见！</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="card bg-white p-6 rounded-lg shadow-sm">
+        <h3 class="text-xl font-semibold mb-4">联系我们</h3>
+        <form class="space-y-4">
+          <div class="form-group">
+            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">姓名</label>
+            <input type="text" id="name" name="name"
+                   class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+          </div>
+
+          <div class="form-group">
+            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">邮箱</label>
+            <input type="email" id="email" name="email"
+                   class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+          </div>
+
+          <div class="form-group">
+            <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">主题</label>
+            <select id="subject" name="subject"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+              <option value="question">问题咨询</option>
+              <option value="feedback">反馈建议</option>
+              <option value="collaboration">合作机会</option>
+              <option value="other">其他</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message" class="block text-sm font-medium text-gray-700 mb-1">消息</label>
+            <textarea id="message" name="message" rows="4"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+          </div>
+
+          <div class="form-group">
+            <button type="submit"
+                    class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              发送消息
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="card bg-white p-6 rounded-lg shadow-sm">
+        <h3 class="text-xl font-semibold mb-4">常见问题</h3>
+        <div class="space-y-4">
+          <div class="faq-item">
+            <div class="faq-question">
+              <button class="flex justify-between items-center w-full text-left font-medium">
+                <span>如何开始将AI集成到我的前端项目中？</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-600" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+            </div>
+            <div class="faq-answer mt-2">
+              <p class="text-gray-600">
+                开始AI前端集成的最简单方法是使用现有的API服务，如OpenAI或Google Cloud
+                AI。这些服务提供了简单的API接口，可以轻松集成到任何前端项目中。如果您想要更深入的集成，可以考虑使用TensorFlow.js或ml5.js等库在浏览器中运行模型。
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <button class="flex justify-between items-center w-full text-left font-medium">
+                <span>前端AI应用的性能如何优化？</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-600" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+            </div>
+            <div class="faq-answer mt-2">
+              <p class="text-gray-600">
+                优化前端AI应用性能的关键策略包括：使用量化模型减小模型大小；实现渐进式加载，先加载UI再加载AI功能；利用WebWorkers在后台线程运行AI计算；缓存常见查询结果；使用WebGL加速计算；以及在可能的情况下使用服务器端处理复杂任务。
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <button class="flex justify-between items-center w-full text-left font-medium">
+                <span>如何设计良好的AI用户体验？</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-600" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+            </div>
+            <div class="faq-answer mt-2">
+              <p class="text-gray-600">
+                良好的AI用户体验设计应遵循以下原则：设置明确的用户期望，不要过度承诺AI能力；提供透明的反馈，让用户了解AI的工作方式；设计优雅的错误处理机制；给予用户控制权和纠正能力；以及确保界面响应迅速，即使在AI处理过程中也能保持交互性。
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <button class="flex justify-between items-center w-full text-left font-medium">
+                <span>前端AI应用有哪些隐私和安全考虑？</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-600" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+            </div>
+            <div class="faq-answer mt-2">
+              <p class="text-gray-600">
+                前端AI应用的隐私和安全考虑包括：明确的数据使用政策；尽可能在本地处理敏感数据；实现数据最小化原则；提供用户选择退出AI功能的选项；保护模型免受对抗性攻击；以及定期审核AI系统的输出，确保其符合伦理标准和法规要求。
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 可能需要添加的HTML结构变更 - 其他联系方式部分 -->
+        <div class="mt-6 other-contact">
+          <h4 class="font-medium mb-3">其他联系方式</h4>
+          <div class="space-y-2">
+            <div class="contact-item">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              <span>support@aifrontend.dev</span>
+            </div>
+            <div class="contact-item">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
+              </svg>
+              <span>加入我们的Discord社区</span>
+            </div>
+            <div class="contact-item">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
+              </svg>
+              <span>@AIFrontendDev</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- 页脚 -->
+<footer class="bg-gray-800 text-white py-12">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div class="footer-section">
+        <h3 class="text-xl font-semibold mb-4">小梦岛 VIDORRA</h3>
+        <p class="text-gray-400">探索AI与前端技术的融合，创造智能、直观的用户体验。</p>
+        <div class="mt-4 flex space-x-4">
+          <a href="#" class="text-gray-400 hover:text-white">
+            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill-rule="evenodd"
+                    d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
+                    clip-rule="evenodd" />
+            </svg>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white">
+            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+            </svg>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white">
+            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill-rule="evenodd"
+                    d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                    clip-rule="evenodd" />
+            </svg>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white">
+            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill-rule="evenodd"
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c5.51 0 10-4.48 10-10S17.51 2 12 2zm6.605 4.61a8.502 8.502 0 011.93 5.314c-.281-.054-3.101-.629-5.943-.271-.065-.141-.12-.293-.184-.445a25.416 25.416 0 00-.564-1.236c3.145-1.28 4.577-3.124 4.761-3.362zM12 3.475c2.17 0 4.154.813 5.662 2.148-.152.216-1.443 1.941-4.48 3.08-1.399-2.57-2.95-4.675-3.189-5A8.687 8.687 0 0112 3.475zm-3.633.803a53.896 53.896 0 013.167 4.935c-3.992 1.063-7.517 1.04-7.896 1.04a8.581 8.581 0 014.729-5.975zM3.453 12.01v-.26c.37.01 4.512.065 8.775-1.215.25.477.477.965.694 1.453-.109.033-.228.065-.336.098-4.404 1.42-6.747 5.303-6.942 5.629a8.522 8.522 0 01-2.19-5.705zM12 20.547a8.482 8.482 0 01-5.239-1.8c.152-.315 1.888-3.656 6.703-5.337.022-.01.033-.01.054-.022a35.318 35.318 0 011.823 6.475 8.4 8.4 0 01-3.341.684zm4.761-1.465c-.086-.52-.542-3.015-1.659-6.084 2.679-.423 5.022.271 5.314.369a8.468 8.468 0 01-3.655 5.715z"
+                    clip-rule="evenodd" />
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-section">
+        <h3 class="text-lg font-semibold mb-4">快速链接</h3>
+        <ul class="space-y-2">
+          <li><a href="#intro" class="text-gray-400 hover:text-white">介绍</a></li>
+          <li><a href="#principles" class="text-gray-400 hover:text-white">设计原则</a></li>
+          <li><a href="#patterns" class="text-gray-400 hover:text-white">交互模式</a></li>
+          <li><a href="#implementation" class="text-gray-400 hover:text-white">实现技术</a></li>
+          <li><a href="#cases" class="text-gray-400 hover:text-white">案例研究</a></li>
+          <li><a href="#future" class="text-gray-400 hover:text-white">未来趋势</a></li>
+          <li><a href="#resources" class="text-gray-400 hover:text-white">资源与工具</a></li>
+          <li><a href="#contact" class="text-gray-400 hover:text-white">联系与反馈</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h3 class="text-lg font-semibold mb-4">资源</h3>
+        <ul class="space-y-2">
+          <li><a href="#" class="text-gray-400 hover:text-white">博客</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white">教程</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white">文档</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white">社区</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white">开源项目</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white">API参考</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h3 class="text-lg font-semibold mb-4">订阅更新</h3>
+        <p class="text-gray-400 mb-4">订阅我们的通讯，获取AI前端最新动态和资源。</p>
+        <form class="flex">
+          <input type="email" placeholder="您的邮箱地址"
+                 class="px-3 py-2 bg-gray-700 text-white rounded-l-md focus:outline-none focus:ring-1 focus:ring-indigo-500 flex-grow">
+          <button type="submit"
+                  class="bg-indigo-600 text-white px-4 py-2 rounded-r-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            订阅
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div class="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+      <div class="text-gray-400 mb-4 md:mb-0">
+        &copy; 2025 小梦岛 VIDORRA. 保留所有权利.
+      </div>
+      <div class="flex space-x-6">
+        <a href="#" class="text-gray-400 hover:text-white">隐私政策</a>
+        <a href="#" class="text-gray-400 hover:text-white">使用条款</a>
+        <a href="#" class="text-gray-400 hover:text-white">Cookie政策</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- JavaScript -->
+<script>
+  // 导航菜单切换
+  document.addEventListener('DOMContentLoaded', function() {
+    const menuButton = document.querySelector('.md\\:hidden button');
+    const mobileMenu = document.createElement('div');
+    mobileMenu.id = 'mobile-menu';
+    mobileMenu.className = 'md:hidden bg-white shadow-lg rounded-lg mt-2 py-2 px-4 absolute right-4 left-4 z-50 hidden';
+
+    // 创建移动菜单项
+    const menuLinks = document.querySelectorAll('.md\\:flex.space-x-6 a');
+    menuLinks.forEach(link => {
+      const menuItem = document.createElement('a');
+      menuItem.href = link.href;
+      menuItem.className = 'block py-2 text-gray-600 hover:text-indigo-600 transition';
+      menuItem.textContent = link.textContent;
+      mobileMenu.appendChild(menuItem);
+    });
+
+    document.querySelector('nav .container').appendChild(mobileMenu);
+
+    if (menuButton) {
+      menuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
+
+    // 关闭点击外部区域时关闭菜单
+    document.addEventListener('click', (e) => {
+      if (!menuButton.contains(e.target) && !mobileMenu.contains(e.target)) {
+        mobileMenu.classList.add('hidden');
+      }
+    });
+  });
+
+  // 滚动指示器
+  window.addEventListener('scroll', () => {
+    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrollIndicator = document.getElementById('scrollIndicator');
+
+    if (scrollIndicator) {
+      const scrollPercentage = (scrollTop / scrollHeight) * 100;
+      scrollIndicator.style.width = scrollPercentage + '%';
+    }
+  });
+
+  // 选项卡功能修复
+  document.addEventListener('DOMContentLoaded', function() {
+    const tabs = document.querySelectorAll('.tab');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const target = tab.dataset.tab;
+
+        tabs.forEach(t => t.classList.remove('active'));
+        tabContents.forEach(c => c.classList.remove('active'));
+
+        tab.classList.add('active');
+        document.getElementById(target).classList.add('active');
+      });
+    });
+
+    // FAQ折叠功能
+    const faqQuestions = document.querySelectorAll('.faq-question button');
+
+    faqQuestions.forEach(question => {
+      question.addEventListener('click', () => {
+        const answer = question.parentElement.nextElementSibling;
+        const icon = question.querySelector('svg');
+
+        // 初始状态可能没有隐藏，所以这里不用toggle
+        if (answer.style.display === 'none' || answer.style.display === '') {
+          answer.style.display = 'block';
+          icon.style.transform = 'rotate(180deg)';
+        } else {
+          answer.style.display = 'none';
+          icon.style.transform = 'rotate(0)';
+        }
+      });
+    });
+  });
+
+  // 手势演示交互
+  document.addEventListener('DOMContentLoaded', function() {
+    const gestureDemo = document.querySelector('.gesture-demo');
+    const gestureHand = document.createElement('div');
+
+    if (gestureDemo) {
+      gestureHand.className = 'gesture-hand';
+      gestureDemo.appendChild(gestureHand);
+
+      gestureDemo.addEventListener('mousemove', (e) => {
+        const rect = gestureDemo.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        gestureHand.style.left = x + 'px';
+        gestureHand.style.top = y + 'px';
+      });
+    }
+  });
+
+  // 复制代码按钮功能
+  document.addEventListener('DOMContentLoaded', function() {
+    const copyButtons = document.querySelectorAll('.copy-btn');
+
+    copyButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const codeBlock = button.closest('.code-container').querySelector('code');
+        const textToCopy = codeBlock.textContent;
+
+        navigator.clipboard.writeText(textToCopy).then(() => {
+          const originalText = button.textContent;
+          button.textContent = '已复制!';
+          button.style.backgroundColor = '#10B981';
+          button.style.color = 'white';
+
+          setTimeout(() => {
+            button.textContent = originalText;
+            button.style.backgroundColor = '';
+            button.style.color = '';
+          }, 2000);
+        }).catch(err => {
+          console.error('复制失败:', err);
+        });
+      });
+    });
+  });
+
+  // 进度条动画
+  document.addEventListener('DOMContentLoaded', function() {
+    const progressBars = document.querySelectorAll('.progress-bar');
+
+    // 用Intersection Observer检测进度条是否在视窗内
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // 获取设置在HTML中的宽度值
+          const width = entry.target.style.width || '65%';
+          // 先设置为0，然后动画过渡到目标值
+          entry.target.style.width = '0%';
+          setTimeout(() => {
+            entry.target.style.width = width;
+          }, 100);
+          // 已经处理过的元素不再观察
+          observer.unobserve(entry.target);
+        }
+      });
+    });
+
+    progressBars.forEach(bar => {
+      observer.observe(bar);
+    });
+  });
+
+  // AI助手按钮添加到页面
+  document.addEventListener('DOMContentLoaded', function() {
+    const aiAssistant = document.createElement('div');
+    aiAssistant.className = 'ai-assistant';
+    aiAssistant.innerHTML = `
+    <div class="ai-pulse"></div>
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+    </svg>
+  `;
+    document.body.appendChild(aiAssistant);
+
+    // 添加点击事件
+    aiAssistant.addEventListener('click', () => {
+      alert('AI助手将在这里打开对话界面');
+    });
+  });
+
+  // 修复移动端样式
+  document.addEventListener('DOMContentLoaded', function() {
+    // 添加响应式处理
+    const updateResponsive = () => {
+      if (window.innerWidth < 768) {
+        document.querySelectorAll('.card').forEach(card => {
+          card.classList.add('mb-6');
+        });
+      } else {
+        document.querySelectorAll('.card').forEach(card => {
+          card.classList.remove('mb-6');
+        });
+      }
+    };
+
+    updateResponsive();
+    window.addEventListener('resize', updateResponsive);
+
+    // 修复聊天气泡样式
+    const chatBubbles = document.querySelectorAll('.chat-bubble');
+    chatBubbles.forEach(bubble => {
+      bubble.style.padding = '10px';
+      bubble.style.borderRadius = '12px';
+      bubble.style.marginBottom = '8px';
+
+      if (bubble.classList.contains('ai')) {
+        bubble.style.backgroundColor = '#f3f4f6';
+        bubble.style.alignSelf = 'flex-start';
+      } else if (bubble.classList.contains('user')) {
+        bubble.style.backgroundColor = '#4F46E5';
+        bubble.style.color = 'white';
+        bubble.style.alignSelf = 'flex-end';
+      }
+    });
+  });
+
+  // 在您的JavaScript部分添加路线图的动画效果
+  document.addEventListener('DOMContentLoaded', function() {
+    // 初始化路线图点的样式和动画
+    const timelinePoints = document.querySelectorAll('.timeline-point');
+
+    // 使用Intersection Observer检测时间线点是否在视窗内
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+
+          // 已经处理过的元素不再观察
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    // 设置初始状态并开始观察
+    timelinePoints.forEach((point, index) => {
+      // 初始设置为隐藏状态
+      point.style.opacity = '0';
+      point.style.transform = 'translateY(20px)';
+      point.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      point.style.transitionDelay = `${index * 0.15}s`;
+
+      observer.observe(point);
+    });
+
+    // 确保第一个点默认为当前状态
+    if (timelinePoints.length > 0) {
+      timelinePoints[0].classList.add('current');
+    }
+  });
+
+  // 添加到JavaScript部分
+  document.addEventListener('DOMContentLoaded', function() {
+    // 代码示例语法高亮初始化
+    if (typeof Prism !== 'undefined') {
+      Prism.highlightAll();
+    }
+
+    // 技术框架部分的动画初始化
+    const techItems = document.querySelectorAll('.tech-item, .api-item, .optimization-item, .testing-item');
+
+    // 使用Intersection Observer检测元素是否在视窗内
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-fade-in');
+
+          // 如果元素有性能指标，添加进度条动画
+          const metricFills = entry.target.querySelectorAll('.metric-fill');
+          metricFills.forEach(fill => {
+            const targetWidth = fill.getAttribute('data-width') || fill.style.width || '70%';
+            fill.style.width = '0%';
+            setTimeout(() => {
+              fill.style.width = targetWidth;
+            }, 100);
+          });
+
+          // 已经处理过的元素不再观察
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    // 设置初始状态并开始观察
+    techItems.forEach((item, index) => {
+      // 添加自定义类供CSS动画使用
+      item.classList.add('animate-item');
+      item.style.opacity = '0';
+      item.style.transform = 'translateY(20px)';
+      item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      item.style.transitionDelay = `${index % 3 * 0.15}s`;
+
+      observer.observe(item);
+    });
+
+    // 为性能指标条设置初始宽度属性
+    document.querySelectorAll('.metric-fill').forEach(fill => {
+      const width = fill.style.width;
+      if (width) {
+        fill.setAttribute('data-width', width);
+        fill.style.width = '0%'; // 初始为0，等待动画触发
+      }
+    });
+  });
+
+  // 添加这个CSS动画类
+  document.head.insertAdjacentHTML('beforeend', `
+  <style>
+    .animate-fade-in {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+`);
+
+  // 添加到JavaScript部分 - 资源与工具部分动画和交互
+  document.addEventListener('DOMContentLoaded', function() {
+    // 资源与工具部分的动画初始化
+    const resourceItems = document.querySelectorAll('.resource-item, .api-service-item, .learning-resource, .community-item');
+
+    // 使用Intersection Observer检测元素是否在视窗内
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-fade-in');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    // 设置初始状态并开始观察
+    resourceItems.forEach((item, index) => {
+      item.style.opacity = '0';
+      item.style.transform = 'translateY(20px)';
+      item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      item.style.transitionDelay = `${index % 4 * 0.1}s`;
+
+      observer.observe(item);
+    });
+
+    // 外部链接处理
+    const externalLinks = document.querySelectorAll('.resource-link, .community-link');
+    externalLinks.forEach(link => {
+      // 添加视觉反馈
+      link.addEventListener('mouseenter', () => {
+        link.style.transform = 'scale(1.1)';
+      });
+
+      link.addEventListener('mouseleave', () => {
+        link.style.transform = '';
+      });
+
+      // 确保外部链接在新标签页打开
+      if (!link.getAttribute('target')) {
+        link.setAttribute('target', '_blank');
+        link.setAttribute('rel', 'noopener noreferrer');
+      }
+    });
+  });
+
+
+  // 添加到JavaScript部分 - 联系与反馈部分交互优化
+  document.addEventListener('DOMContentLoaded', function() {
+    // FAQ折叠功能修复
+    const faqQuestions = document.querySelectorAll('.faq-question button');
+
+    faqQuestions.forEach(question => {
+      question.addEventListener('click', () => {
+        // 获取当前问题的回答部分
+        const answer = question.closest('.faq-item').querySelector('.faq-answer');
+        // 获取图标
+        const icon = question.querySelector('svg');
+
+        // 切换显示状态
+        if (answer.classList.contains('active')) {
+          answer.classList.remove('active');
+          answer.style.display = 'none';
+          icon.style.transform = '';
+        } else {
+          answer.classList.add('active');
+          answer.style.display = 'block';
+          icon.style.transform = 'rotate(180deg)';
+        }
+      });
+    });
+
+    // 表单交互增强
+    const formInputs = document.querySelectorAll('.form-group input, .form-group select, .form-group textarea');
+
+    formInputs.forEach(input => {
+      // 输入字段获得焦点时添加高亮效果
+      input.addEventListener('focus', () => {
+        input.closest('.form-group').classList.add('focused');
+      });
+
+      input.addEventListener('blur', () => {
+        input.closest('.form-group').classList.remove('focused');
+      });
+    });
+
+    // 表单提交处理
+    const contactForm = document.querySelector('#contact form');
+    if (contactForm) {
+      contactForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // 模拟表单提交
+        const submitButton = this.querySelector('button[type="submit"]');
+        const originalText = submitButton.textContent;
+
+        submitButton.disabled = true;
+        submitButton.textContent = '发送中...';
+
+        // 这里应该是实际的表单提交逻辑，这里用setTimeout模拟
+        setTimeout(() => {
+          submitButton.textContent = '发送成功!';
+          submitButton.style.backgroundColor = '#10B981';
+
+          // 重置表单
+          this.reset();
+
+          // 恢复按钮状态
+          setTimeout(() => {
+            submitButton.textContent = originalText;
+            submitButton.style.backgroundColor = '';
+            submitButton.disabled = false;
+          }, 2000);
+        }, 1500);
+      });
+    }
+
+    // 初始化 - 确保所有FAQ答案默认隐藏
+    document.querySelectorAll('.faq-answer').forEach(answer => {
+      answer.style.display = 'none';
+    });
+  });
+
+  // 添加到JavaScript部分 - AI前端设计模式与最佳实践交互优化
+  document.addEventListener('DOMContentLoaded', function() {
+    // 设计模式项的动画效果
+    const patternItems = document.querySelectorAll('.pattern-item, .principle-item');
+
+    // 使用Intersection Observer检测元素是否在视窗内
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-fade-in');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    // 设置初始状态并开始观察
+    patternItems.forEach((item, index) => {
+      item.style.opacity = '0';
+      item.style.transform = 'translateY(20px)';
+      item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      item.style.transitionDelay = `${index % 3 * 0.1}s`;
+
+      observer.observe(item);
+    });
+
+    // 模拟对话示例效果
+    const chatBubbles = document.querySelectorAll('.chat-bubble');
+    chatBubbles.forEach((bubble, index) => {
+      bubble.style.opacity = '0';
+      bubble.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      bubble.style.transitionDelay = `${index * 0.5}s`;
+
+      // 气泡出现动画
+      setTimeout(() => {
+        bubble.style.opacity = '1';
+
+        // 如果是用户消息，从右侧滑入
+        if (bubble.classList.contains('user')) {
+          bubble.style.transform = 'translateX(20px)';
+          setTimeout(() => {
+            bubble.style.transform = 'translateX(0)';
+          }, 100);
+        }
+        // 如果是AI消息，从左侧滑入
+        else if (bubble.classList.contains('ai')) {
+          bubble.style.transform = 'translateX(-20px)';
+          setTimeout(() => {
+            bubble.style.transform = 'translateX(0)';
+          }, 100);
+        }
+      }, 500 + index * 500);
+    });
+
+    // 错误处理示例交互
+    const errorButtons = document.querySelectorAll('.error-handling-example button');
+    errorButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const errorMessage = button.closest('.error-handling-example').querySelector('.chat-bubble.error');
+
+        if (button.textContent === '重新表述') {
+          errorMessage.textContent = '好的，我将尝试以不同方式理解您的问题。请提供更多详细信息或以不同方式描述您的需求。';
+          errorMessage.classList.remove('error');
+          errorMessage.classList.add('ai');
+        } else if (button.textContent === '搜索') {
+          errorMessage.textContent = '正在为您搜索相关信息...';
+          errorMessage.classList.remove('error');
+          errorMessage.classList.add('ai');
+
+          // 模拟搜索结果
+          setTimeout(() => {
+            errorMessage.textContent = '我找到了一些相关信息，希望能对您有所帮助。您需要更具体的哪方面内容？';
+          }, 1500);
+        } else if (button.textContent === '人工客服') {
+          errorMessage.textContent = '正在为您转接人工客服，请稍候...';
+          errorMessage.classList.remove('error');
+          errorMessage.classList.add('ai');
+        }
+      });
+
+      // 添加按钮悬停效果
+      button.addEventListener('mouseenter', () => {
+        if (button.textContent === '重新表述') {
+          button.style.backgroundColor = '#4338ca'; // 深一点的蓝紫色
+        } else {
+          button.style.backgroundColor = '#f3f4f6';
+        }
+      });
+
+      button.addEventListener('mouseleave', () => {
+        if (button.textContent === '重新表述') {
+          button.style.backgroundColor = '#4F46E5';
+        } else {
+          button.style.backgroundColor = 'white';
+        }
+      });
+    });
+
+    // 多模态示例交互
+    const modalityIcons = document.querySelectorAll('.multimodal-example .w-8');
+    modalityIcons.forEach(icon => {
+      icon.addEventListener('mouseenter', () => {
+        icon.style.transform = 'scale(1.1)';
+        icon.style.transition = 'transform 0.3s ease';
+      });
+
+      icon.addEventListener('mouseleave', () => {
+        icon.style.transform = '';
+      });
+    });
+  });
+
+
+</script>
+</body>
+</html>
